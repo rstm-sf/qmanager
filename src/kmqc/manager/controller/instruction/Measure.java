@@ -1,18 +1,21 @@
 package kmqc.manager.controller.instruction;
 
-import kpfu.terentyev.quantum.api.KazanModel.QuantumMemoryAddress;
+import kmqc.manager.controller.memory.QMemAddr;
 
 public class Measure extends QInstruction {
-    public Measure(QuantumMemoryAddress qMemAddr, int result) {
+    public Measure(QMemAddr qMemAddr, Integer result) {
         this.qMemAddr = qMemAddr;
         this.result = result;
     }
 
-    @Override
-    public void Excecute() {
+    public void execute() {
         result = QInstruction.emulator.measure(qMemAddr);
     }
 
-    private QuantumMemoryAddress qMemAddr;
-    private int result;
+    public Integer fetch() {
+        return result;
+    }
+
+    private QMemAddr qMemAddr;
+    private Integer result;
 }

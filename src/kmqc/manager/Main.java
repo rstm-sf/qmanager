@@ -1,12 +1,69 @@
 package kmqc.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import kmqc.manager.controller.instruction.Init;
+import kmqc.manager.controller.instruction.Instruction;
+import kmqc.manager.controller.instruction.Load;
+import kmqc.manager.controller.instruction.Measure;
+import kmqc.manager.controller.instruction.QET;
+import kmqc.manager.controller.instruction.Store;
+import kmqc.manager.controller.memory.QMemAddr;
+import kmqc.manager.controller.qpu.QRegAddr;
+import kmqc.manager.controller.qpu.Transistor;
+
 import kpfu.terentyev.quantum.KazanModel.*;
 import kpfu.terentyev.quantum.emulator.api.QuantumManager;
 import kpfu.terentyev.quantum.emulator.core.Complex;
 import kpfu.terentyev.quantum.emulator.core.cuDoubleComplex;
 
 public class Main {
-    public static void testKazanModelEmulator(){
+    public static void main(String[] args) throws Exception {
+        testKazanModelEmulator();
+        testWrapper();
+    }
+
+    public static void testWrapper() {
+        System.out.print("Start test Wrapper\n");
+
+        double lQubit1Freq = 60.0;
+        double lQubit1TimeDelay = 1.0;
+        QMemAddr q1Addr = new QMemAddr(
+            lQubit1Freq, lQubit1TimeDelay, MemoryHalf.HALF_0);
+        QMemAddr q2Addr = new QMemAddr(
+            lQubit1Freq, lQubit1TimeDelay, MemoryHalf.HALF_1);
+
+        int currTrIdx = 0;
+        Transistor transistor = new Transistor(
+            currTrIdx,
+            new QRegAddr(currTrIdx, ProcessingUnitCellAddress.Cell0),
+            new QRegAddr(currTrIdx, ProcessingUnitCellAddress.ControlPoint),
+            new QRegAddr(currTrIdx, ProcessingUnitCellAddress.Cell1));
+
+        List<Instruction> instructions = new ArrayList<>();
+        instructions.add(new Init(q1Addr, q2Addr));
+        instructions.add(new Load(q1Addr, transistor.qRegAddr0));
+        instructions.add(new Load(q2Addr, transistor.qRegAddr1));
+        instructions.add(new QET(currTrIdx, Math.PI / 4.0));
+        instructions.add(new QET(currTrIdx, Math.PI / 4.0));
+        instructions.add(new Store(transistor.qRegAddr0, q1Addr));
+        instructions.add(new Store(transistor.qRegAddr1, q2Addr));
+        instructions.add(new Measure(q1Addr, Integer.valueOf(3)));
+        instructions.add(new Measure(q2Addr, Integer.valueOf(4)));
+
+        for (Instruction instruction : instructions) {
+            instruction.execute();
+        }
+
+        Measure result1 = (Measure)instructions.get(instructions.size() - 2);
+        Measure result2 = (Measure)instructions.get(instructions.size() - 1);
+        System.out.print("q1: " + result1.fetch() + "\n");
+        System.out.print("q2: " + result2.fetch() + "\n");
+        System.out.print("End testing\n");
+    }
+
+    public static void testKazanModelEmulator() {
         // QVM initialization
         double MAX_MEMORY_FREQUENCY = 200.0;
         double MIN_MEMORY_FREQUENCY = 50.0;
@@ -19,12 +76,12 @@ public class Main {
             PROCCESSING_UNITS_COUNT);
 
         // Qubits initialization
-        double logicalQubit1Freq = 60;
-        double logicalQubit1TimeDelay = 1;
+        double lQubit1Freq = 60.0;
+        double lQubit1TimeDelay = 1.0;
         QuantumMemoryAddress q1Addr = new QuantumMemoryAddress(
-            logicalQubit1Freq, logicalQubit1TimeDelay, MemoryHalf.HALF_0);
+            lQubit1Freq, lQubit1TimeDelay, MemoryHalf.HALF_0);
         QuantumMemoryAddress q2Addr = new QuantumMemoryAddress(
-            logicalQubit1Freq, logicalQubit1TimeDelay, MemoryHalf.HALF_1);
+            lQubit1Freq, lQubit1TimeDelay, MemoryHalf.HALF_1);
         QVM.initLogicalQubit(
             q1Addr,
             cuDoubleComplex.cuCmplx(1, 0),
@@ -52,10 +109,6 @@ public class Main {
 
         System.out.print("q1: " + QVM.measure(q1Addr) + "\n");
         System.out.print("q2: " + QVM.measure(q2Addr) + "\n");
-        System.out.print("End testing");
-    }
-
-    public static void main(String[] args) throws Exception {
-        testKazanModelEmulator();
+        System.out.print("End testing\n");
     }
 }

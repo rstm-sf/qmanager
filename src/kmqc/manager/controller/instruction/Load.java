@@ -1,19 +1,18 @@
 package kmqc.manager.controller.instruction;
 
-import kpfu.terentyev.quantum.api.KazanModel.ProcessingAddress;
-import kpfu.terentyev.quantum.api.KazanModel.QuantumMemoryAddress;
+import kmqc.manager.controller.qpu.QRegAddr;
+import kmqc.manager.controller.memory.QMemAddr;
 
 public class Load extends QInstruction {
-    public Load(QuantumMemoryAddress qMemAddr, ProcessingAddress qReg) {
+    public Load(QMemAddr qMemAddr, QRegAddr qRegAddr) {
         this.qMemAddr = qMemAddr;
-        this.qReg = qReg;
+        this.qRegAddr = qRegAddr;
     }
 
-    @Override
-    public void Excecute() {
-        QInstruction.emulator.load(qMemAddr, qReg);
+    public void execute() {
+        QInstruction.emulator.load(qMemAddr, qRegAddr);
     }
 
-    private QuantumMemoryAddress qMemAddr;
-    private ProcessingAddress qReg;
+    private QMemAddr qMemAddr;
+    private QRegAddr qRegAddr;
 }

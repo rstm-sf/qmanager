@@ -1,22 +1,25 @@
 package kmqc.manager.controller.instruction;
 
-import kpfu.terentyev.quantum.api.KazanModel.QuantumMemoryAddress;
+import kmqc.manager.controller.memory.QMemAddr;
+
+import kpfu.terentyev.quantum.emulator.core.cuDoubleComplex;
 
 public class Init extends QInstruction {
-    public Init(
-        QuantumMemoryAddress qMemAddr0,
-        QuantumMemoryAddress qMemAddr1) {
+    public Init(QMemAddr qMemAddr0, QMemAddr qMemAddr1) {
         this.qMemAddr0 = qMemAddr0;
         this.qMemAddr1 = qMemAddr1;
     }
 
-    @Override
-    public void Excecute() {
+    public void execute() {
         QInstruction.emulator.initLogicalQubit(
-            qMemAddr0, new Complex(1, 0), new Complex(0, 0),
-            qMemAddr1, new Complex(0, 0), new Complex(1, 0));
+            qMemAddr0,
+            cuDoubleComplex.cuCmplx(1, 0),
+            cuDoubleComplex.cuCmplx(0, 0),
+            qMemAddr1,
+            cuDoubleComplex.cuCmplx(0, 0),
+            cuDoubleComplex.cuCmplx(1, 0));
     }
 
-    private QuantumMemoryAddress qMemAddr0;
-    private QuantumMemoryAddress qMemAddr1;
+    private QMemAddr qMemAddr0;
+    private QMemAddr qMemAddr1;
 }

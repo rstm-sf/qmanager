@@ -1,8 +1,11 @@
 package kmqc.manager.controller.instruction;
 
-import kpfu.terentyev.quantum.api.KazanModel.Emulator;
-import kpfu.terentyev.quantum.api.KazanModel.QuantumProccessorHelper;
+import kpfu.terentyev.quantum.KazanModel.Emulator;
 
-public class QInstruction implements Instruction {
+public abstract class QInstruction implements Instruction {
     protected static Emulator emulator = new Emulator(200.0, 50.0, 50.0, 1);
+
+    public QInstruction() {}
+
+    public abstract void execute();
 }
