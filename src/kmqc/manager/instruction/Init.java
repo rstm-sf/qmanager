@@ -1,4 +1,4 @@
-package kmqc.manager.controller.instruction;
+package kmqc.manager.instruction;
 
 import kmqc.manager.controller.memory.QMemAddr;
 
@@ -11,13 +11,7 @@ public class Init extends QInstruction {
     }
 
     public void execute() {
-        QInstruction.emulator.initLogicalQubit(
-            qMemAddr0,
-            cuDoubleComplex.cuCmplx(1, 0),
-            cuDoubleComplex.cuCmplx(0, 0),
-            qMemAddr1,
-            cuDoubleComplex.cuCmplx(0, 0),
-            cuDoubleComplex.cuCmplx(1, 0));
+        QInstruction.qController.init(qMemAddr0, qMemAddr1);
     }
 
     private QMemAddr qMemAddr0;

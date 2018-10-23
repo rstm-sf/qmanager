@@ -1,4 +1,4 @@
-package kmqc.manager.controller.instruction;
+package kmqc.manager.instruction;
 
 import kmqc.manager.controller.qpu.QRegAddr;
 import kmqc.manager.controller.memory.QMemAddr;
@@ -10,7 +10,7 @@ public class Store extends QInstruction {
     }
 
     public void execute() {
-        QInstruction.emulator.save(qRegAddr, qMemAddr);
+        QInstruction.qController.store(qRegAddr, qMemAddr);
     }
 
     private QRegAddr qRegAddr;

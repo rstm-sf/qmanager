@@ -3,12 +3,12 @@ package kmqc.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import kmqc.manager.controller.instruction.Init;
-import kmqc.manager.controller.instruction.Instruction;
-import kmqc.manager.controller.instruction.Load;
-import kmqc.manager.controller.instruction.Measure;
-import kmqc.manager.controller.instruction.QET;
-import kmqc.manager.controller.instruction.Store;
+import kmqc.manager.instruction.Init;
+import kmqc.manager.instruction.Load;
+import kmqc.manager.instruction.Measure;
+import kmqc.manager.instruction.QET;
+import kmqc.manager.instruction.QInstruction;
+import kmqc.manager.instruction.Store;
 import kmqc.manager.controller.memory.PartLogicalMemAddr;
 import kmqc.manager.controller.memory.QMemAddr;
 import kmqc.manager.controller.qpu.QRegAddr;
@@ -43,25 +43,26 @@ public class Main {
             new QRegAddr(currTrIdx, TransistorCellAdrr.Center),
             new QRegAddr(currTrIdx, TransistorCellAdrr.Right));
 
-        List<Instruction> instructions = new ArrayList<>();
+        List<QInstruction> instructions = new ArrayList<>();
         instructions.add(new Init(q1Addr, q2Addr));
-        instructions.add(new Load(q1Addr, transistor.qRegAddr0));
-        instructions.add(new Load(q2Addr, transistor.qRegAddr1));
+        instructions.add(new Load(q1Addr, transistor.qRegAddrL));
+        instructions.add(new Load(q2Addr, transistor.qRegAddrR));
         instructions.add(new QET(currTrIdx, Math.PI / 4.0));
         instructions.add(new QET(currTrIdx, Math.PI / 4.0));
-        instructions.add(new Store(transistor.qRegAddr0, q1Addr));
-        instructions.add(new Store(transistor.qRegAddr1, q2Addr));
-        instructions.add(new Measure(q1Addr, Integer.valueOf(3)));
-        instructions.add(new Measure(q2Addr, Integer.valueOf(4)));
+        instructions.add(new Store(transistor.qRegAddrL, q1Addr));
+        instructions.add(new Store(transistor.qRegAddrR, q2Addr));
+        instructions.add(new Measure(q1Addr));
+        instructions.add(new Measure(q2Addr));
 
-        for (Instruction instruction : instructions) {
+        for (QInstruction instruction : instructions) {
             instruction.execute();
         }
 
-        Measure result1 = (Measure)instructions.get(instructions.size() - 2);
-        Measure result2 = (Measure)instructions.get(instructions.size() - 1);
-        System.out.print("q1: " + result1.fetch() + "\n");
-        System.out.print("q2: " + result2.fetch() + "\n");
+        ArrayList<Integer> cResults = instructions.get(0).getCResults();
+        for (Integer result : cResults) {
+            System.out.print("q?: " + result.toString() + "\n");
+        }
+
         System.out.print("End testing\n");
     }
 

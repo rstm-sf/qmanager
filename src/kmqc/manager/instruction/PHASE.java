@@ -1,4 +1,4 @@
-package kmqc.manager.controller.instruction;
+package kmqc.manager.instruction;
 
 public class PHASE extends QInstruction {
     public PHASE(int transistorIdx, double theta) {
@@ -7,7 +7,7 @@ public class PHASE extends QInstruction {
     }
 
     public void execute() {
-        QInstruction.emulator.PHASE(transistorIdx, theta);
+        QInstruction.qController.opPHASE(transistorIdx, theta);
     }
 
     private int transistorIdx;

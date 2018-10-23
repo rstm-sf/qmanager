@@ -3,17 +3,17 @@ package kmqc.manager.controller.qpu;
 public class Transistor {
     public Transistor(
         int idx,
-        QRegAddr qRegAddr0,
+        QRegAddr qRegAddrL,
         QRegAddr qRegAddrC,
-        QRegAddr qRegAddr1) {
+        QRegAddr qRegAddrR) {
         this.idx = idx;
-        this.qRegAddr0 = qRegAddr0;
+        this.qRegAddrL = qRegAddrL;
         this.qRegAddrC = qRegAddrC;
-        this.qRegAddr1 = qRegAddr1;
+        this.qRegAddrR = qRegAddrR;
     }
 
     public int idx;
-    public QRegAddr qRegAddr0;
+    public QRegAddr qRegAddrL;
     public QRegAddr qRegAddrC;
-    public QRegAddr qRegAddr1;
+    public QRegAddr qRegAddrR;
 }

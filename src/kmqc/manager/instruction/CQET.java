@@ -1,4 +1,4 @@
-package kmqc.manager.controller.instruction;
+package kmqc.manager.instruction;
 
 public class CQET extends QInstruction {
     public CQET(int transistorIdx, double theta) {
@@ -7,7 +7,7 @@ public class CQET extends QInstruction {
     }
 
     public void execute() {
-        QInstruction.emulator.cQET(transistorIdx, theta);
+        QInstruction.qController.opQET(transistorIdx, theta);
     }
 
     private int transistorIdx;
