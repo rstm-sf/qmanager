@@ -12,6 +12,7 @@ import kmqc.manager.controller.instruction.Store;
 import kmqc.manager.controller.memory.QMemAddr;
 import kmqc.manager.controller.qpu.QRegAddr;
 import kmqc.manager.controller.qpu.Transistor;
+import kmqc.manager.controller.qpu.TransistorCellAdrr;
 
 import kpfu.terentyev.quantum.KazanModel.*;
 import kpfu.terentyev.quantum.emulator.api.QuantumManager;
@@ -37,9 +38,9 @@ public class Main {
         int currTrIdx = 0;
         Transistor transistor = new Transistor(
             currTrIdx,
-            new QRegAddr(currTrIdx, ProcessingUnitCellAddress.Cell0),
-            new QRegAddr(currTrIdx, ProcessingUnitCellAddress.ControlPoint),
-            new QRegAddr(currTrIdx, ProcessingUnitCellAddress.Cell1));
+            new QRegAddr(currTrIdx, TransistorCellAdrr.Left),
+            new QRegAddr(currTrIdx, TransistorCellAdrr.Center),
+            new QRegAddr(currTrIdx, TransistorCellAdrr.Right));
 
         List<Instruction> instructions = new ArrayList<>();
         instructions.add(new Init(q1Addr, q2Addr));

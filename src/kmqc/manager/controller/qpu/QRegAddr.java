@@ -5,7 +5,20 @@ import kpfu.terentyev.quantum.KazanModel.ProcessingUnitCellAddress;
 
 public class QRegAddr extends ProcessingAddress {
     public QRegAddr(
-        int transistorIdx, ProcessingUnitCellAddress transistorCellAddress) {
-        super(transistorIdx, transistorCellAddress);
+        int transistorIdx, TransistorCellAdrr transistorCellAddr) {
+        super(transistorIdx, toProcessingUnitCellAddress(transistorCellAddr));
+    }
+
+    private static ProcessingUnitCellAddress toProcessingUnitCellAddress(
+        TransistorCellAdrr addr) {
+        switch (addr) {
+        case Left:
+            return ProcessingUnitCellAddress.Cell0;
+        case Center:
+            return ProcessingUnitCellAddress.ControlPoint;
+        case Right:
+            return ProcessingUnitCellAddress.Cell1;
+        }
+        return null;
     }
 }
