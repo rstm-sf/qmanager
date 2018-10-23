@@ -9,6 +9,7 @@ import kmqc.manager.controller.instruction.Load;
 import kmqc.manager.controller.instruction.Measure;
 import kmqc.manager.controller.instruction.QET;
 import kmqc.manager.controller.instruction.Store;
+import kmqc.manager.controller.memory.PartLogicalMemAddr;
 import kmqc.manager.controller.memory.QMemAddr;
 import kmqc.manager.controller.qpu.QRegAddr;
 import kmqc.manager.controller.qpu.Transistor;
@@ -31,9 +32,9 @@ public class Main {
         double lQubit1Freq = 60.0;
         double lQubit1TimeDelay = 1.0;
         QMemAddr q1Addr = new QMemAddr(
-            lQubit1Freq, lQubit1TimeDelay, MemoryHalf.HALF_0);
+            lQubit1Freq, lQubit1TimeDelay, PartLogicalMemAddr.First);
         QMemAddr q2Addr = new QMemAddr(
-            lQubit1Freq, lQubit1TimeDelay, MemoryHalf.HALF_1);
+            lQubit1Freq, lQubit1TimeDelay, PartLogicalMemAddr.Second);
 
         int currTrIdx = 0;
         Transistor transistor = new Transistor(
