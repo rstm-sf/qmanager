@@ -9,16 +9,16 @@ import kpfu.terentyev.quantum.util.ComplexDouble;
 /**
  * Created by alexandrterentyev on 25.02.15.
  */
-public class QRegister {
+public class QReg {
     private int qubitsNumber;
     private int size;
     private ComplexDouble [][] densityMatrix;
 
-    public QRegister (int qubitsNumber) {
+    public QReg (int qubitsNumber) {
         this.setQubitsNumber(qubitsNumber);
     }
 
-    public QRegister (
+    public QReg (
         int qubitsNumber, ComplexDouble[][] densityMatrix
     ) throws Exception {
         this.qubitsNumber = qubitsNumber;
@@ -29,7 +29,7 @@ public class QRegister {
         }
     }
 
-    public QRegister (
+    public QReg (
         int qubitsNumber, ComplexDouble [] configuration
     ) throws Exception {
         this.qubitsNumber = qubitsNumber;
