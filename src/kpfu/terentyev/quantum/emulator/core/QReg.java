@@ -14,17 +14,13 @@ public class QReg {
     private int size;
     private ComplexDouble [][] densityMatrix;
 
-    public QReg (int nQubits) {
-        this.setQubitsNumber(nQubits);
-    }
-
     public QReg (
         int nQubits, ComplexDouble[][] densityMatrix
     ) throws Exception {
         this.nQubits = nQubits;
         size = ((int) Math.pow(2, nQubits));
-        this.densityMatrix =densityMatrix;
-        if (size != densityMatrix.length){
+        this.densityMatrix = densityMatrix;
+        if (size != densityMatrix.length) {
             throw new Exception();
         }
     }
@@ -36,27 +32,17 @@ public class QReg {
         size = ((int) Math.pow(2, nQubits));
         this.densityMatrix = densityMatrixForClearStageConfigurationVector(
             configuration);
-        if (size != densityMatrix.length){
+        if (size != densityMatrix.length) {
             throw new Exception();
         }
     }
 
-    public ComplexDouble[][] getDensityMatrix(){
+    public ComplexDouble[][] getDensityMatrix() {
         return densityMatrix;
     }
 
     public int getQubitsNumber() {
         return nQubits;
-    }
-
-    public void setQubitsNumber(int nQubits) {
-        this.nQubits = nQubits;
-        this.size = (int) Math.pow(2, nQubits);
-        ComplexDouble[] vector = new ComplexDouble[size];
-        vector[0]=Complex.unit();
-        for (int i = 1; i < vector.length; i++) {
-            vector[i]=Complex.zero();
-        }
     }
 
     private ComplexDouble[][] densityMatrixForClearStageConfigurationVector(
