@@ -12,40 +12,35 @@ import kpfu.terentyev.quantum.util.ComplexDouble;
 public class QReg {
     private int nQubits;
     private int size;
-    private ComplexDouble [][] densityMatrix;
+    private ComplexDouble[][] densMat;
 
-    public QReg (
-        int nQubits, ComplexDouble[][] densityMatrix
-    ) throws Exception {
+    public QReg (int nQubits, ComplexDouble[][] densMat) throws Exception {
         this.nQubits = nQubits;
         size = ((int) Math.pow(2, nQubits));
-        this.densityMatrix = densityMatrix;
-        if (size != densityMatrix.length) {
+        this.densMat = densMat;
+        if (size != densMat.length) {
             throw new Exception();
         }
     }
 
-    public QReg (
-        int nQubits, ComplexDouble [] configuration
-    ) throws Exception {
+    public QReg (int nQubits, ComplexDouble[] configuration) throws Exception {
         this.nQubits = nQubits;
         size = ((int) Math.pow(2, nQubits));
-        this.densityMatrix = densityMatrixForClearStageConfigurationVector(
-            configuration);
-        if (size != densityMatrix.length) {
+        this.densMat = densMat4ClearStageConfigurationVec(configuration);
+        if (size != densMat.length) {
             throw new Exception();
         }
     }
 
-    public ComplexDouble[][] getDensityMatrix() {
-        return densityMatrix;
+    public ComplexDouble[][] getDensMat() {
+        return densMat;
     }
 
     public int getQubitsNumber() {
         return nQubits;
     }
 
-    private ComplexDouble[][] densityMatrixForClearStageConfigurationVector(
+    private ComplexDouble[][] densMat4ClearStageConfigurationVec(
         ComplexDouble[] vector) {
         return ComplexMath.ketBraTensorMultiplication(vector, vector);
     }
@@ -55,7 +50,7 @@ public class QReg {
         String result ="";
         for (int i=0; i<size; i++){
             for (int j=0; j<size; j++){
-                result= result+ densityMatrix[i][j] + " ";
+                result= result+ densMat[i][j] + " ";
             }
            result = result + "\n";
         }
@@ -64,12 +59,12 @@ public class QReg {
 
     public void performAlgorythm (QAlgorithm algorythm) throws Exception {
         ComplexDouble[][] uMat = algorythm.getMatrix();
-        densityMatrix = ComplexMath.squareMatricesMultiplication(
-            uMat, densityMatrix, size);
+        densMat = ComplexMath.squareMatricesMultiplication(
+            uMat, densMat, size);
         ComplexDouble[][] uMat_transpose = ComplexMath.
             hermitianTransposeForMatrix(uMat, size, size);
-        densityMatrix = ComplexMath.squareMatricesMultiplication(
-            densityMatrix, uMat_transpose, size);
+        densMat = ComplexMath.squareMatricesMultiplication(
+            densMat, uMat_transpose, size);
     }        
 
     // Измерение
@@ -93,7 +88,7 @@ public class QReg {
         ComplexDouble[][] p0MatTr_p0Mat = ComplexMath.multiplication(
             p0MatTr, size, size, p0Mat, size, size);
         ComplexDouble [][] p0MatTr_p0Mat_ro = ComplexMath.multiplication(
-            p0MatTr_p0Mat, size, size, densityMatrix, size, size);
+            p0MatTr_p0Mat, size, size, densMat, size, size);
 
         double p0Norm =  ComplexDouble.cuCreal(
             ComplexMath.trace(p0MatTr_p0Mat_ro, size));
@@ -119,17 +114,16 @@ public class QReg {
             pmMat, size, size);
         ComplexDouble [][] pmMat_ro_pmMatTr = ComplexMath.
             squareMatricesMultiplication(
-                ComplexMath.squareMatricesMultiplication(
-                    pmMat, densityMatrix, size),
+                ComplexMath.squareMatricesMultiplication(pmMat, densMat, size),
                 pmMatTr,
                 size);
         ComplexDouble [][] pmTr_pmMat_ro = ComplexMath.
             squareMatricesMultiplication(
                 ComplexMath.squareMatricesMultiplication(pmMatTr, pmMat, size),
-                densityMatrix,
+                densMat,
                 size);
 
-        densityMatrix = ComplexMath.multiplication(
+        densMat = ComplexMath.multiplication(
             ComplexDouble.cuCmplx(
                 1.0 / ComplexMath.trace(pmTr_pmMat_ro, size).x, 0.0),
             pmMat_ro_pmMatTr,

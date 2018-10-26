@@ -110,8 +110,7 @@ public class QManager {
 
         for (String regAddr : usedRegisterAddresses) {
             QRegInfo currRegInfo = regs.get(regAddr);
-            ComplexDouble[][] currRegInfoMat = currRegInfo.
-                                               reg.getDensityMatrix();
+            ComplexDouble[][] currRegInfoMat = currRegInfo.reg.getDensMat();
             newRegConfig = ComplexMath.tensorMultiplication(
                 newRegConfig, newRegConfig.length, newRegConfig.length,
                 currRegInfoMat, currRegInfoMat.length, currRegInfoMat.length);
