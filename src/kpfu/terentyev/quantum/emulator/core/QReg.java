@@ -10,19 +10,19 @@ import kpfu.terentyev.quantum.util.ComplexDouble;
  * Created by alexandrterentyev on 25.02.15.
  */
 public class QReg {
-    private int qubitsNumber;
+    private int nQubits;
     private int size;
     private ComplexDouble [][] densityMatrix;
 
-    public QReg (int qubitsNumber) {
-        this.setQubitsNumber(qubitsNumber);
+    public QReg (int nQubits) {
+        this.setQubitsNumber(nQubits);
     }
 
     public QReg (
-        int qubitsNumber, ComplexDouble[][] densityMatrix
+        int nQubits, ComplexDouble[][] densityMatrix
     ) throws Exception {
-        this.qubitsNumber = qubitsNumber;
-        size = ((int) Math.pow(2, qubitsNumber));
+        this.nQubits = nQubits;
+        size = ((int) Math.pow(2, nQubits));
         this.densityMatrix =densityMatrix;
         if (size != densityMatrix.length){
             throw new Exception();
@@ -30,10 +30,10 @@ public class QReg {
     }
 
     public QReg (
-        int qubitsNumber, ComplexDouble [] configuration
+        int nQubits, ComplexDouble [] configuration
     ) throws Exception {
-        this.qubitsNumber = qubitsNumber;
-        size = ((int) Math.pow(2, qubitsNumber));
+        this.nQubits = nQubits;
+        size = ((int) Math.pow(2, nQubits));
         this.densityMatrix = densityMatrixForClearStageConfigurationVector(
             configuration);
         if (size != densityMatrix.length){
@@ -46,12 +46,12 @@ public class QReg {
     }
 
     public int getQubitsNumber() {
-        return qubitsNumber;
+        return nQubits;
     }
 
-    public void setQubitsNumber(int qubitsNumber) {
-        this.qubitsNumber = qubitsNumber;
-        this.size = (int) Math.pow(2, qubitsNumber);
+    public void setQubitsNumber(int nQubits) {
+        this.nQubits = nQubits;
+        this.size = (int) Math.pow(2, nQubits);
         ComplexDouble[] vector = new ComplexDouble[size];
         vector[0]=Complex.unit();
         for (int i = 1; i < vector.length; i++) {
@@ -59,12 +59,8 @@ public class QReg {
         }
     }
 
-    private ComplexDouble[][] densityMatrixForClearStageConfigurationVector (
+    private ComplexDouble[][] densityMatrixForClearStageConfigurationVector(
         ComplexDouble[] vector) {
-        //int size = vector.length;
-        //ComplexDouble[][] result = new ComplexDouble[size][size];
-        //ComplexDouble[][] result = ComplexMath.ketBraTensorMultiplication(
-        //    vector, vector);
         return ComplexMath.ketBraTensorMultiplication(vector, vector);
     }
 
@@ -91,14 +87,14 @@ public class QReg {
     }        
 
     // Измерение
-    public int measureQubit (int qubit) throws Exception {
-        if (qubit >= qubitsNumber){
+    public int measureQubit (int idxQubit) throws Exception {
+        if (idxQubit >= nQubits){
             throw new Exception();
         }
 
         ComplexDouble [][] p0Mat = ComplexMath.zeroMatrix(size, size);
-        int pow2n_q = (int) Math.pow(2, qubitsNumber - qubit);
-        int pow2n_q_1 = (int) Math.pow(2, qubitsNumber - qubit - 1);
+        int pow2n_q = (int) Math.pow(2, nQubits - idxQubit);
+        int pow2n_q_1 = (int) Math.pow(2, nQubits - idxQubit - 1);
         // нужно пройти по всем состояниям, где текущий кубит 0
         for (int i = 0; i < size; i += pow2n_q) {
             for (int j = i; j < i + pow2n_q_1; j++) {

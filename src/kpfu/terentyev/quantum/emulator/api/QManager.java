@@ -63,8 +63,6 @@ public class QManager {
         }
     }
 
-    //protected static final String qubitDestroyedRegAddr = "QubitInfo destroyed";
-
     // QubitInfo creation
     public QubitInfo initNewQubit() throws Exception {
         //! Почему (1, 0)?
@@ -101,7 +99,7 @@ public class QManager {
             }
         }
 
-        if (usedRegisterAddresses.size() == 1){
+        if (usedRegisterAddresses.size() == 1) {
             return regs.get(usedRegisterAddresses.get(0));
         }
 
@@ -184,14 +182,7 @@ public class QManager {
 
     // Operations
     public int measure (QubitInfo qubit) throws Exception {
-//        int result = regInfo.reg.measureQubit(qubit.idxInReg);
-//        int qubitPosition = regInfo.qubits.indexOf(qubit);
-//        regInfo.qubits.remove(qubitPosition);
-//        for (int i=qubitPosition; i< regInfo.qubits.size(); i++){
-//            regInfo.qubits.get(i).idxInReg --;
-//        }
-//        qubit.regAddr = qubitDestroyedRegAddr;
-//        TODO: remove reg if qubits count is 0
+        //TODO: remove reg if qubits count is 0
         return regs.get(qubit.regAddr).reg.measureQubit(qubit.idxInReg);
     }
 }
