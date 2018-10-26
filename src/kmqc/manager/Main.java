@@ -16,9 +16,9 @@ import kmqc.manager.controller.qpu.Transistor;
 import kmqc.manager.controller.qpu.TransistorCellAdrr;
 
 import kpfu.terentyev.quantum.KazanModel.*;
-import kpfu.terentyev.quantum.emulator.api.QuantumManager;
+import kpfu.terentyev.quantum.emulator.api.QManager;
 import kpfu.terentyev.quantum.emulator.core.Complex;
-import kpfu.terentyev.quantum.emulator.core.cuDoubleComplex;
+import kpfu.terentyev.quantum.util.ComplexDouble;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -87,11 +87,11 @@ public class Main {
             lQubit1Freq, lQubit1TimeDelay, MemoryHalf.HALF_1);
         QVM.initLogicalQubit(
             q1Addr,
-            cuDoubleComplex.cuCmplx(1, 0),
-            cuDoubleComplex.cuCmplx(0, 0),
+            ComplexDouble.cuCmplx(1, 0),
+            ComplexDouble.cuCmplx(0, 0),
             q2Addr,
-            cuDoubleComplex.cuCmplx(0, 0),
-            cuDoubleComplex.cuCmplx(1, 0));
+            ComplexDouble.cuCmplx(0, 0),
+            ComplexDouble.cuCmplx(1, 0));
 
         // Transistor addresses
         int currTrIdx = 0;

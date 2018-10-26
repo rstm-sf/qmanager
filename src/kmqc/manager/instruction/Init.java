@@ -2,7 +2,7 @@ package kmqc.manager.instruction;
 
 import kmqc.manager.controller.memory.QMemAddr;
 
-import kpfu.terentyev.quantum.emulator.core.cuDoubleComplex;
+import kpfu.terentyev.quantum.util.ComplexDouble;
 
 public class Init extends QInstruction {
     public Init(QMemAddr qMemAddr0, QMemAddr qMemAddr1) {

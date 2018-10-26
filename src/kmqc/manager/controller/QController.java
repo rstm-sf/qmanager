@@ -1,49 +1,69 @@
 package kmqc.manager.controller;
 
-import kmqc.manager.controller.memory.QMemAddr;
-import kmqc.manager.controller.qpu.QRegAddr;
+import kmqc.manager.controller.memory.QMem;
+import kmqc.manager.controller.qpu.Placing;
+import kmqc.manager.controller.qpu.ProcessingUnit;
 
-import kpfu.terentyev.quantum.emulator.core.cuDoubleComplex;
-import kpfu.terentyev.quantum.KazanModel.Emulator;
+import kpfu.terentyev.quantum.emulator.api.QManager;
+import kpfu.terentyev.quantum.util.ComplexDouble;
 
 public class QController {
+
     public QController() {
-        emulator = new Emulator(200.0, 50.0, 50.0, 1);
+        this.helper = new QManager();
+        this.qpu = new ProcessingUnit(this.helper, 1);
+        this.qmem = new QMem(this.helper, 2);
     }
 
-    public void init(QMemAddr qMemAddr0, QMemAddr qMemAddr1) {
-        emulator.initLogicalQubit(
-            qMemAddr0,
-            cuDoubleComplex.cuCmplx(1, 0),
-            cuDoubleComplex.cuCmplx(0, 0),
-            qMemAddr1,
-            cuDoubleComplex.cuCmplx(0, 0),
-            cuDoubleComplex.cuCmplx(1, 0));
+    public void init(int idxCell, ComplexDouble alpha, ComplexDouble beta) {
+        qmem.initState(idxCell, alpha, beta);
     }
 
-    public int measure(QMemAddr qMemAddr) {
-        return emulator.measure(qMemAddr);
+    public int measure(int idxCell) {
+        return qmem.measure(idxCell);
     }
 
-    public void load(QMemAddr qMemAddr, QRegAddr qRegAddr) {
-        emulator.load(qMemAddr, qRegAddr);
+    public void load(int idxMem, int idxTransistor, Placing placing) {
+        switch(placing) {
+        case Placing.Left:
+            qpu.setLeftState(idxTransistor, qmem.getRidState(idxMem));
+            break;
+        case Placing.Center:
+            qpu.setCenterState(idxTransistor, qmem.getRidState(idxMem));
+            break;
+        case Placing.Right:
+            qpu.setRightState(idxTransistor, qmem.getRidState(idxMem));
+            break;
+        }
     }
 
-    public void store(QRegAddr qRegAddr, QMemAddr qMemAddr) {
-        emulator.save(qRegAddr, qMemAddr);
+    public void store(int idxTransistor, Placing placing, int idxMem) {
+        switch(placing) {
+        case Placing.Left:
+            qmem.setState(idxMem, qpu.getRidLeftState(idxTransistor));
+            break;
+        case Placing.Center:
+            qmem.setState(idxMem, qpu.getRidCenterState(idxTransistor));
+            break;
+        case Placing.Right:
+            qmem.setState(idxMem, qpu.getRidCenterState(idxTransistor));
+            break;
+        }
     }
 
-    public void opCQET(int transistorIdx, double theta) {
-        emulator.cQET(transistorIdx, theta);
+    public void opCQET(int transistorIdx, double theta) throws Exception {
+        qpu.opCQET(transistorIdx, theta);
     }
 
-    public void opQET(int transistorIdx, double theta) {
-        emulator.QET(transistorIdx, theta);
+    public void opQET(int transistorIdx, double theta) throws Exception {
+        qpu.opQET(transistorIdx, theta);
     }
 
-    public void opPHASE(int transistorIdx, double theta) {
-        emulator.PHASE(transistorIdx, theta);
+    public void opPHASE(int transistorIdx, double theta) throws Exception {
+        qpu.opPHASE(transistorIdx, theta);
     }
 
-    private Emulator emulator;
+    private QManager helper
+    private ProcessingUnit qpu;
+    private QMem qmem;
 }
