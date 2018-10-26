@@ -184,4 +184,117 @@ public class QManager {
         //TODO: remove reg if qubits count is 0
         return regs.get(qubit.regAddr).reg.measureQubit(qubit.idxInReg);
     }
+
+    public void opQET(
+        QubitInfo a, QubitInfo b, double theta) throws Exception {
+        QManager.RegInfo info = checkAndMergeRegistersIfNeedForQubits(a, b);
+        ComplexDouble[][] matQET = generateMatQET(theta);
+        helper.performTransitionForQubits(null, matQET, info, a, b);
+    }
+
+    public void opPHASE(
+        QubitInfo a, QubitInfo b, double theta) throws Exception {
+        QManager.RegInfo info = checkAndMergeRegistersIfNeedForQubits(a, b);
+        ComplexDouble[][] matPHASE = generateMatPHASE(theta);
+        performTransitionForQubits(null, matPHASE, info, a, b);
+    }
+
+    public void opCQET(
+        QubitInfo a, QubitInfo b, QubitInfo c, double theta) throws Exception {
+        QManager.RegInfo info = checkAndMergeRegistersIfNeedForQubits(a, c, b);
+        boolean isFirstC =  getIdxInReg(c) < getIdxInReg(a)
+                         && getIdxInReg(c) < getIdxInReg(b);
+        boolean isLastC  =  getIdxInReg(c) > getIdxInReg(a)
+                         && getIdxInReg(c) > getIdxInReg(b);
+        ComplexDouble[][] matCQET = generateMatCQET(theta, isFirstC, isLastC);
+        performTransitionForQubits(null, matCQET, info, a, b, c);
+    }
+
+    private static ComplexDouble[][] generateMatQET(double theta) {
+        return {
+            {
+                Complex.unit(), Complex.zero(), Complex.zero(), Complex.zero()
+            },
+            {
+                Complex.zero(),
+                Complex.complex(Math.cos(theta / 2.0), 0.0),
+                Complex.complex(0.0, Math.sin(theta / 2.0)),
+                Complex.zero()
+            },
+            {
+                Complex.zero(),
+                Complex.complex(0.0, Math.sin(theta / 2.0)),
+                Complex.complex(Math.cos(theta / 2.0), 0.0),
+                Complex.zero()
+            },
+            {
+                Complex.zero(), Complex.zero(), Complex.zero(), Complex.unit()
+            }
+        };
+    }
+
+    private static ComplexDouble[][] generateMatPHASE(double theta) {
+        return {
+            {
+                Complex.unit(), Complex.zero(), Complex.zero(), Complex.zero()
+            },
+            {
+                Complex.zero(),
+                Complex.complex(Math.cos(-theta / 2.0), Math.sin(-theta / 2.0)),
+                Complex.zero(),
+                Complex.zero()
+            },
+            {
+                Complex.zero(),
+                Complex.zero(),
+                Complex.complex(Math.cos(theta / 2.0), Math.sin(theta / 2.0)),
+                Complex.zero()
+            },
+            {
+                Complex.zero(), Complex.zero(), Complex.zero(), Complex.unit()
+            }
+        };
+    }
+
+    private static ComplexDouble[][] generateMatCQET(
+        double theta, boolean isFirstC, boolean isLastC) {
+        final ComplexDouble z  = Complex.zero();
+        final ComplexDouble u  = Complex.unit();
+        final ComplexDouble co = Complex.complex(Math.cos(theta / 2.0), 0.0);
+        final ComplexDouble si = Complex.complex(0.0, Math.sin(theta / 2.0));
+        if (isFirstC) {
+            return {
+                {u,  z,  z, z, z, z, z, z},
+                {z, co, is, z, z, z, z, z},
+                {z, is, co, z, z, z ,z, z},
+                {z,  z,  z, u, z, z, z, z},
+                {z,  z,  z, z, u, z, z, z},
+                {z,  z,  z, z, z, u, z, z},
+                {z,  z,  z, z, z, z, u, z},
+                {z,  z,  z, z, z, z, z, u}
+            };
+        } else if (isLastC) {
+            return {
+                {z, z, z, z, u,  z,  z, z},
+                {u, z, z, z, z,  z,  z, z},
+                {z, z, z, z, z, co, is, z},
+                {z, u, z, z, z,  z,  z, z},
+                {z, z, z, z, z, is, co, z},
+                {z, z, u, z, z,  z,  z, z},
+                {z, z, z, z, z,  z,  z, u},
+                {z, z, z, u, z,  z,  z, z}
+            };
+        } else {
+            return {
+                {z, z, u,  z,  z, z, z, z},
+                {z, z, z, co, is, z, z, z},
+                {u, z, z,  z,  z, z, z, z},
+                {z, u, z,  z,  z, z, z, z},
+                {z, z, z, is, co, z, z, z},
+                {z, z, z,  z,  z, u, z, z},
+                {z, z, z,  z,  z, z, u, z},
+                {z, z, z,  z,  z, z, z, u}
+            };
+        }
+    }
 }
