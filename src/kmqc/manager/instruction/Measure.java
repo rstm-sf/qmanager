@@ -1,17 +1,14 @@
 package kmqc.manager.instruction;
 
-import java.util.ArrayList;
-
-import kmqc.manager.controller.memory.QMemAddr;
-
 public class Measure extends QInstruction {
-    public Measure(QMemAddr qMemAddr) {
-        this.qMemAddr = qMemAddr;
+
+    public Measure(int idxQMem) {
+        this.idxQMem = idxQMem;
     }
 
     public void execute() {
-        cResults.add(QInstruction.qController.measure(qMemAddr));
+        qController.measure(idxQMem);
     }
 
-    private QMemAddr qMemAddr;
+    private int idxQMem;
 }

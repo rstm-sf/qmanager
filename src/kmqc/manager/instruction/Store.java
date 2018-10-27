@@ -1,18 +1,17 @@
 package kmqc.manager.instruction;
 
-import kmqc.manager.controller.qpu.QRegAddr;
-import kmqc.manager.controller.memory.QMemAddr;
+import kmqc.manager.controller.qpu.AddrDevice;
 
 public class Store extends QInstruction {
-    public Store(QRegAddr qRegAddr, QMemAddr qMemAddr) {
-        this.qRegAddr = qRegAddr;
-        this.qMemAddr = qMemAddr;
+
+    public Store(AddrDevice addr, int idxQMem) {
+        this(addr, idxQMem);
     }
 
     public void execute() {
-        QInstruction.qController.store(qRegAddr, qMemAddr);
+        qController.store(addr, idxQMem);
     }
 
-    private QRegAddr qRegAddr;
-    private QMemAddr qMemAddr;
+    private AddrDevice addr;
+    private int idxQMem;
 }

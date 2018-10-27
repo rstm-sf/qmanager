@@ -1,15 +1,16 @@
 package kmqc.manager.instruction;
 
 public class PHASE extends QInstruction {
-    public PHASE(int transistorIdx, double theta) {
-        this.transistorIdx = transistorIdx;
+
+    public PHASE(int idxTransistor, double theta) {
+        this.idxTransistor = idxTransistor;
         this.theta = theta;
     }
 
     public void execute() {
-        QInstruction.qController.opPHASE(transistorIdx, theta);
+        qController.opPHASE(idxTransistor, theta);
     }
 
-    private int transistorIdx;
+    private int idxTransistor;
     private double theta;
 }

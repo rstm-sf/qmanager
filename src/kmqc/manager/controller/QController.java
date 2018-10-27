@@ -14,20 +14,20 @@ public class QController {
     public QController() {
         this.helper = new QManager();
         this.qpu = new ProcessingUnit(this.helper, 1);
-        this.qmem = new QMem(this.helper, 2);
+        this.qmem = new QMem(this.helper, 4);
         this.cmem = new CMem(2);
     }
 
-    public void init(int idxCMem) {
-        qmem.initState(idxCMem, alpha, beta);
+    public void init(int idxCMem, Integer state) {
+        qmem.initState(idxCMem, state);
     }
 
     public void init(int idxQMem, ComplexDouble alpha, ComplexDouble beta) {
         qmem.initState(idxQMem, alpha, beta);
     }
 
-    public void measure(int idxQMem, int idxQMem) {
-        cmem.setState(idxCMem, qmem.measure(idxCell));
+    public void measure(int idxQMem, int idxCMem) {
+        cmem.setState(idxCMem, qmem.measure(idxQMem));
     }
 
     public void load(int idxQMem, AddrDevice addr) {

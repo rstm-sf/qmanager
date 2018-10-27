@@ -1,15 +1,16 @@
 package kmqc.manager.instruction;
 
 public class QET extends QInstruction {
-    public QET(int transistorIdx, double theta) {
-        this.transistorIdx = transistorIdx;
+
+    public QET(int idxTransistor, double theta) {
+        this.idxTransistor = idxTransistor;
         this.theta = theta;
     }
 
     public void execute() {
-        QInstruction.qController.opQET(transistorIdx, theta);
+        qController.opQET(idxTransistor, theta);
     }
 
-    private int transistorIdx;
+    private int idxTransistor;
     private double theta;
 }

@@ -1,18 +1,17 @@
 package kmqc.manager.instruction;
 
-import kmqc.manager.controller.qpu.QRegAddr;
-import kmqc.manager.controller.memory.QMemAddr;
+import kmqc.manager.controller.qpu.AddrDevice;
 
 public class Load extends QInstruction {
-    public Load(QMemAddr qMemAddr, QRegAddr qRegAddr) {
-        this.qMemAddr = qMemAddr;
-        this.qRegAddr = qRegAddr;
+
+    public Load(int idxQMem, AddrDevice addr) {
+        this(idxQMem, addr);
     }
 
     public void execute() {
-        QInstruction.qController.load(qMemAddr, qRegAddr);
+        qController.load(idxQMem, addr);
     }
 
-    private QMemAddr qMemAddr;
-    private QRegAddr qRegAddr;
+    private int idxQMem;
+    private AddrDevice addr;
 }
