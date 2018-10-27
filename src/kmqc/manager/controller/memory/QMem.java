@@ -1,6 +1,7 @@
 package kmqc.manager.controller.memory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kpfu.terentyev.quantum.emulator.api.QManager;
 import kpfu.terentyev.quantum.util.ComplexDouble;
@@ -12,43 +13,34 @@ public class QMem {
         this.maxCellQMem = maxCellQMem;
         memory = new ArrayList<CellQMem>(maxCellQMem);
         for (int i = 0; i < maxCellQMem; i++) {
-            memory.add(new CellQMem());
+            memory.add(new CellQMem(this.helper));
         }
     }
 
-    public getMaxCountOfQubits() {
+    public int getMaxCountOfQubits() {
         return maxCellQMem;
     }
 
     public void setState(int idxCell, QManager.QubitInfo qubitInfo) {
-        checkIdx(idxCell);
-        memory[idxCell].setState(qubitInfo);
+        memory.get(idxCell).setState(qubitInfo);
     }
 
-    public QManager.Qubit getRidState(int idxCell) {
-        checkIdx(idxCell);
-        return memory[idxCell].getRidState();
+    public QManager.QubitInfo getRidState(int idxCell) {
+        return memory.get(idxCell).getRidState();
     }
 
     public void initState(
-        int idxCell, ComplexDouble alpha, ComplexDouble beta) {
-        checkIdx(idxCell);
-        memory[idxCell].setState(helper.initNewQubit(alpha, beta));
+        int idxCell, ComplexDouble alpha, ComplexDouble beta) throws Exception {
+        QManager.QubitInfo qubitInfo = helper.initNewQubit(alpha, beta);
+        memory.get(idxCell).setState(qubitInfo);
     }
 
-    public int measureState(int idxCell) {
-        checkIdx(idxCell);
-        return memory[idxCell].measure();
-    }
-
-    private void checkIdx(int idx) {
-        if (idx < 0 || idx >= maxCellQMem) {
-            throw new Exception("Address is out of available range");
-        }
+    public int measureState(int idxCell) throws Exception {
+        return memory.get(idxCell).measure();
     }
 
     private QManager helper;
 
     private int maxCellQMem;
-    private ArrayList<CellQMem> memory;
+    private List<CellQMem> memory;
 }

@@ -19,26 +19,27 @@ public class QController {
     }
 
     public void init(int idxCMem, Integer state) {
-        qmem.initState(idxCMem, state);
+        cmem.setState(idxCMem, state);
     }
 
-    public void init(int idxQMem, ComplexDouble alpha, ComplexDouble beta) {
+    public void init(
+        int idxQMem, ComplexDouble alpha, ComplexDouble beta) throws Exception {
         qmem.initState(idxQMem, alpha, beta);
     }
 
-    public void measure(int idxQMem, int idxCMem) {
-        cmem.setState(idxCMem, qmem.measure(idxQMem));
+    public void measure(int idxQMem, int idxCMem) throws Exception {
+        cmem.setState(idxCMem, qmem.measureState(idxQMem));
     }
 
     public void load(int idxQMem, AddrDevice addr) {
         switch(addr.placing) {
-        case Placing.Left:
+        case Left:
             qpu.setLeftState(addr.idxTransistor, qmem.getRidState(idxQMem));
             break;
-        case Placing.Center:
+        case Center:
             qpu.setCenterState(addr.idxTransistor, qmem.getRidState(idxQMem));
             break;
-        case Placing.Right:
+        case Right:
             qpu.setRightState(addr.idxTransistor, qmem.getRidState(idxQMem));
             break;
         }
@@ -46,13 +47,13 @@ public class QController {
 
     public void store(AddrDevice addr, int idxQMem) {
         switch(addr.placing) {
-        case Placing.Left:
+        case Left:
             qmem.setState(idxQMem, qpu.getRidLeftState(addr.idxTransistor));
             break;
-        case Placing.Center:
+        case Center:
             qmem.setState(idxQMem, qpu.getRidCenterState(addr.idxTransistor));
             break;
-        case Placing.Right:
+        case Right:
             qmem.setState(idxQMem, qpu.getRidCenterState(addr.idxTransistor));
             break;
         }
@@ -71,10 +72,10 @@ public class QController {
     }
 
     public Integer getIdxCMem(int idx) {
-        return cmem.getState(int idx);
+        return cmem.getState(idx);
     }
 
-    private QManager helper
+    private QManager helper;
     private ProcessingUnit qpu;
     private QMem qmem;
     private CMem cmem;

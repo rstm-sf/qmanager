@@ -23,7 +23,7 @@ public class Device {
         return temp;
     }
 
-    public getPlacing() {
+    public Placing getPlacing() {
         return placing;
     }
 

@@ -19,7 +19,7 @@ public class CellQMem {
         return temp;
     }
 
-    public int measure() {
+    public int measure() throws Exception {
         int result = helper.measure(state);
         state = null;
         return result;

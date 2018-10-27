@@ -187,21 +187,21 @@ public class QManager {
 
     public void opQET(
         QubitInfo a, QubitInfo b, double theta) throws Exception {
-        QManager.RegInfo info = checkAndMergeRegistersIfNeedForQubits(a, b);
+        QRegInfo info = checkAndMergeRegistersIfNeedForQubits(a, b);
         ComplexDouble[][] matQET = generateMatQET(theta);
-        helper.performTransitionForQubits(null, matQET, info, a, b);
+        performTransitionForQubits(null, matQET, info, a, b);
     }
 
     public void opPHASE(
         QubitInfo a, QubitInfo b, double theta) throws Exception {
-        QManager.RegInfo info = checkAndMergeRegistersIfNeedForQubits(a, b);
+        QRegInfo info = checkAndMergeRegistersIfNeedForQubits(a, b);
         ComplexDouble[][] matPHASE = generateMatPHASE(theta);
         performTransitionForQubits(null, matPHASE, info, a, b);
     }
 
     public void opCQET(
         QubitInfo a, QubitInfo b, QubitInfo c, double theta) throws Exception {
-        QManager.RegInfo info = checkAndMergeRegistersIfNeedForQubits(a, c, b);
+        QRegInfo info = checkAndMergeRegistersIfNeedForQubits(a, c, b);
         boolean isFirstC =  getIdxInReg(c) < getIdxInReg(a)
                          && getIdxInReg(c) < getIdxInReg(b);
         boolean isLastC  =  getIdxInReg(c) > getIdxInReg(a)
@@ -211,7 +211,7 @@ public class QManager {
     }
 
     private static ComplexDouble[][] generateMatQET(double theta) {
-        return {
+        return new ComplexDouble[][] {
             {
                 Complex.unit(), Complex.zero(), Complex.zero(), Complex.zero()
             },
@@ -234,7 +234,7 @@ public class QManager {
     }
 
     private static ComplexDouble[][] generateMatPHASE(double theta) {
-        return {
+        return new ComplexDouble[][] {
             {
                 Complex.unit(), Complex.zero(), Complex.zero(), Complex.zero()
             },
@@ -262,11 +262,12 @@ public class QManager {
         final ComplexDouble u  = Complex.unit();
         final ComplexDouble co = Complex.complex(Math.cos(theta / 2.0), 0.0);
         final ComplexDouble si = Complex.complex(0.0, Math.sin(theta / 2.0));
+
         if (isFirstC) {
-            return {
+            return new ComplexDouble[][] {
                 {u,  z,  z, z, z, z, z, z},
-                {z, co, is, z, z, z, z, z},
-                {z, is, co, z, z, z ,z, z},
+                {z, co, si, z, z, z, z, z},
+                {z, si, co, z, z, z ,z, z},
                 {z,  z,  z, u, z, z, z, z},
                 {z,  z,  z, z, u, z, z, z},
                 {z,  z,  z, z, z, u, z, z},
@@ -274,23 +275,23 @@ public class QManager {
                 {z,  z,  z, z, z, z, z, u}
             };
         } else if (isLastC) {
-            return {
+            return new ComplexDouble[][] {
                 {z, z, z, z, u,  z,  z, z},
                 {u, z, z, z, z,  z,  z, z},
-                {z, z, z, z, z, co, is, z},
+                {z, z, z, z, z, co, si, z},
                 {z, u, z, z, z,  z,  z, z},
-                {z, z, z, z, z, is, co, z},
+                {z, z, z, z, z, si, co, z},
                 {z, z, u, z, z,  z,  z, z},
                 {z, z, z, z, z,  z,  z, u},
                 {z, z, z, u, z,  z,  z, z}
             };
         } else {
-            return {
+            return new ComplexDouble[][] {
                 {z, z, u,  z,  z, z, z, z},
-                {z, z, z, co, is, z, z, z},
+                {z, z, z, co, si, z, z, z},
                 {u, z, z,  z,  z, z, z, z},
                 {z, u, z,  z,  z, z, z, z},
-                {z, z, z, is, co, z, z, z},
+                {z, z, z, si, co, z, z, z},
                 {z, z, z,  z,  z, u, z, z},
                 {z, z, z,  z,  z, z, u, z},
                 {z, z, z,  z,  z, z, z, u}

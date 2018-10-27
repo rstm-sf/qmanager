@@ -1,6 +1,7 @@
 package kmqc.manager.controller.qpu;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kpfu.terentyev.quantum.emulator.api.QManager;
 
@@ -9,68 +10,53 @@ public class ProcessingUnit {
     public ProcessingUnit(QManager helper, int countOfTransistors) {
         this.helper = helper;
         this.countOfTransistors = countOfTransistors;
-        chip = new ArrayList<Transistor>(countOfTransistors);
-        for (int i = 0; i < countTransistor; i++) {
+        unit = new ArrayList<Transistor>(countOfTransistors);
+        for (int i = 0; i < countOfTransistors; i++) {
             unit.add(new Transistor(this.helper));
         }
     }
 
     public void setLeftState(
         int idxTransistor, QManager.QubitInfo qubitInfo) {
-        checkIdx(idxTransistor);
-        unit[idxTransistor].setLeftState(qubitInfo);
+        unit.get(idxTransistor).setLeftState(qubitInfo);
     }
 
     public void setCenterState(
         int idxTransistor, QManager.QubitInfo qubitInfo) {
-        checkIdx(idxTransistor);
-        unit[idxTransistor].setCenterState(qubitInfo);
+        unit.get(idxTransistor).setCenterState(qubitInfo);
     }
 
     public void setRightState(
         int idxTransistor, QManager.QubitInfo qubitInfo) {
-        checkIdx(idxTransistor);
-        unit[idxTransistor].setRightState(qubitInfo);
+        unit.get(idxTransistor).setRightState(qubitInfo);
     }
 
     public QManager.QubitInfo getRidLeftState(int idxTransistor) {
-        checkIdx(idxTransistor);
-        return unit[idxTransistor].getRidLeftState();
+        return unit.get(idxTransistor).getRidLeftState();
     }
 
     public QManager.QubitInfo getRidCenterState(int idxTransistor) {
-        checkIdx(idxTransistor);
-        return unit[idxTransistor].getRidCenterState();
+        return unit.get(idxTransistor).getRidCenterState();
     }
 
-    public QManager.QubitInfo getRidCenterState(int idxTransistor) {
-        checkIdx(idxTransistor);
-        return unit[idxTransistor].getRidRightState();
+    public QManager.QubitInfo getRidRightState(int idxTransistor) {
+        return unit.get(idxTransistor).getRidRightState();
     }
 
     public void opQET(int idxTransistor, double theta) throws Exception {
-        checkIdx(idxTransistor);
-        unit[idxTransistor].opQET(theta);
+        unit.get(idxTransistor).opQET(theta);
     }
 
     public void opPHASE(int idxTransistor, double theta) throws Exception {
-        checkIdx(idxTransistor);
-        unit[idxTransistor].opPHASE(theta);
+        unit.get(idxTransistor).opPHASE(theta);
     }
 
     public void opCQET(int idxTransistor, double theta) throws Exception {
-        checkIdx(idxTransistor);
-        unit[idxTransistor].opCQET(theta);
-    }
-
-    private void checkIdx(int idx) {
-        if (idx < 0 || idx >= countOfTransistors) {
-            throw new Exception("Address is out of available range");
-        }
+        unit.get(idxTransistor).opCQET(theta);
     }
 
     private QManager helper;
 
     private int countOfTransistors;
-    private ArrayList<Transistor> unit;
+    private List<Transistor> unit;
 }

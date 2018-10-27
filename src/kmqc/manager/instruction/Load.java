@@ -5,7 +5,8 @@ import kmqc.manager.controller.qpu.AddrDevice;
 public class Load extends QInstruction {
 
     public Load(int idxQMem, AddrDevice addr) {
-        this(idxQMem, addr);
+        this.idxQMem = idxQMem;
+        this.addr = addr;
     }
 
     public void execute() {

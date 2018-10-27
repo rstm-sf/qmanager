@@ -11,15 +11,15 @@ public class Transistor {
         this.devR = new Device(Placing.Right);
     }
 
-    public setLeftState(QManager.QubitInfo qubitInfo) {
+    public void setLeftState(QManager.QubitInfo qubitInfo) {
         devL.setState(qubitInfo);
     }
 
-    public setCenterState(QManager.QubitInfo qubitInfo) {
+    public void setCenterState(QManager.QubitInfo qubitInfo) {
         devC.setState(qubitInfo);
     }
 
-    public setRightState(QManager.QubitInfo qubitInfo) {
+    public void setRightState(QManager.QubitInfo qubitInfo) {
         devR.setState(qubitInfo);
     }
 
@@ -36,15 +36,15 @@ public class Transistor {
     }
 
     public void opQET(double theta) throws Exception {
-        helper.opQET(devL.getState(), devR.getState());
+        helper.opQET(devL.getState(), devR.getState(), theta);
     }
 
     public void opPHASE(double theta) throws Exception {
-        helper.opPHASE(devL.getState(), devR.getState());
+        helper.opPHASE(devL.getState(), devR.getState(), theta);
     }
 
     public void opCQET(double theta) throws Exception {
-        helper.opCQET(devL.getState(), devC.getState(), devR.getState());
+        helper.opCQET(devL.getState(), devC.getState(), devR.getState(), theta);
     }
 
     private QManager helper;

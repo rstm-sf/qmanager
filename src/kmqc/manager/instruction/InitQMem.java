@@ -5,11 +5,17 @@ import kpfu.terentyev.quantum.util.ComplexDouble;
 public class InitQMem extends QInstruction {
 
     public InitQMem(int idx, ComplexDouble alpha, ComplexDouble beta) {
-        this(idx, alpha, beta);
+        this.idx = idx;
+        this.alpha = alpha;
+        this.beta = beta;
     }
 
     public void execute() {
-        qController.init(idx, alpha, beta);
+        try {
+            qController.init(idx, alpha, beta);
+        } catch (Exception exc) {
+            throw new IllegalStateException(exc);
+        }
     }
 
     private int idx;
