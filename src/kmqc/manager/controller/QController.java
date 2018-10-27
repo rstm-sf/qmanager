@@ -1,6 +1,8 @@
 package kmqc.manager.controller;
 
+import kmqc.manager.controller.memory.CMem;
 import kmqc.manager.controller.memory.QMem;
+import kmqc.manager.controller.qpu.AddrDevice;
 import kmqc.manager.controller.qpu.Placing;
 import kmqc.manager.controller.qpu.ProcessingUnit;
 
@@ -13,57 +15,67 @@ public class QController {
         this.helper = new QManager();
         this.qpu = new ProcessingUnit(this.helper, 1);
         this.qmem = new QMem(this.helper, 2);
+        this.cmem = new CMem(2);
     }
 
-    public void init(int idxCell, ComplexDouble alpha, ComplexDouble beta) {
-        qmem.initState(idxCell, alpha, beta);
+    public void init(int idxCMem) {
+        qmem.initState(idxCMem, alpha, beta);
     }
 
-    public int measure(int idxCell) {
-        return qmem.measure(idxCell);
+    public void init(int idxQMem, ComplexDouble alpha, ComplexDouble beta) {
+        qmem.initState(idxQMem, alpha, beta);
     }
 
-    public void load(int idxMem, int idxTransistor, Placing placing) {
-        switch(placing) {
+    public void measure(int idxQMem, int idxQMem) {
+        cmem.setState(idxCMem, qmem.measure(idxCell));
+    }
+
+    public void load(int idxQMem, AddrDevice addr) {
+        switch(addr.placing) {
         case Placing.Left:
-            qpu.setLeftState(idxTransistor, qmem.getRidState(idxMem));
+            qpu.setLeftState(addr.idxTransistor, qmem.getRidState(idxQMem));
             break;
         case Placing.Center:
-            qpu.setCenterState(idxTransistor, qmem.getRidState(idxMem));
+            qpu.setCenterState(addr.idxTransistor, qmem.getRidState(idxQMem));
             break;
         case Placing.Right:
-            qpu.setRightState(idxTransistor, qmem.getRidState(idxMem));
+            qpu.setRightState(addr.idxTransistor, qmem.getRidState(idxQMem));
             break;
         }
     }
 
-    public void store(int idxTransistor, Placing placing, int idxMem) {
-        switch(placing) {
+    public void store(AddrDevice addr, int idxQMem) {
+        switch(addr.placing) {
         case Placing.Left:
-            qmem.setState(idxMem, qpu.getRidLeftState(idxTransistor));
+            qmem.setState(idxQMem, qpu.getRidLeftState(addr.idxTransistor));
             break;
         case Placing.Center:
-            qmem.setState(idxMem, qpu.getRidCenterState(idxTransistor));
+            qmem.setState(idxQMem, qpu.getRidCenterState(addr.idxTransistor));
             break;
         case Placing.Right:
-            qmem.setState(idxMem, qpu.getRidCenterState(idxTransistor));
+            qmem.setState(idxQMem, qpu.getRidCenterState(addr.idxTransistor));
             break;
         }
     }
 
-    public void opCQET(int transistorIdx, double theta) throws Exception {
-        qpu.opCQET(transistorIdx, theta);
+    public void opCQET(int idxTransistor, double theta) throws Exception {
+        qpu.opCQET(idxTransistor, theta);
     }
 
-    public void opQET(int transistorIdx, double theta) throws Exception {
-        qpu.opQET(transistorIdx, theta);
+    public void opQET(int idxTransistor, double theta) throws Exception {
+        qpu.opQET(idxTransistor, theta);
     }
 
-    public void opPHASE(int transistorIdx, double theta) throws Exception {
-        qpu.opPHASE(transistorIdx, theta);
+    public void opPHASE(int idxTransistor, double theta) throws Exception {
+        qpu.opPHASE(idxTransistor, theta);
+    }
+
+    public Integer getIdxCMem(int idx) {
+        return cmem.getState(int idx);
     }
 
     private QManager helper
     private ProcessingUnit qpu;
     private QMem qmem;
+    private CMem cmem;
 }

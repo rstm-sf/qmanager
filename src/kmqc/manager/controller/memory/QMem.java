@@ -7,17 +7,17 @@ import kpfu.terentyev.quantum.util.ComplexDouble;
 
 public class QMem {
 
-    public QMem(QManager helper, int maxCountOfQubits) {
+    public QMem(QManager helper, int maxCellQMem) {
         this.helper = helper;
-        this.maxCountOfQubits = maxCountOfQubits;
-        memory = new ArrayList<CellMem>(maxCountOfQubits);
-        for (int i = 0; i < maxCountOfQubits; i++) {
-            memory.add(new CellMem());
+        this.maxCellQMem = maxCellQMem;
+        memory = new ArrayList<CellQMem>(maxCellQMem);
+        for (int i = 0; i < maxCellQMem; i++) {
+            memory.add(new CellQMem());
         }
     }
 
     public getMaxCountOfQubits() {
-        return maxCountOfQubits;
+        return maxCellQMem;
     }
 
     public void setState(int idxCell, QManager.QubitInfo qubitInfo) {
@@ -38,17 +38,17 @@ public class QMem {
 
     public int measureState(int idxCell) {
         checkIdx(idxCell);
-        return helper.measure(memory[idxCell].getRidState());
+        return memory[idxCell].measure();
     }
 
     private void checkIdx(int idx) {
-        if (idx < 0 || idx >= maxCountOfQubits) {
+        if (idx < 0 || idx >= maxCellQMem) {
             throw new Exception("Address is out of available range");
         }
     }
 
     private QManager helper;
 
-    private int maxCountOfQubits;
-    private ArrayList<CellMem> memory;
+    private int maxCellQMem;
+    private ArrayList<CellQMem> memory;
 }

@@ -2,9 +2,10 @@ package kmqc.manager.controller.memory;
 
 import kpfu.terentyev.quantum.emulator.api.QManager;
 
-public class CellMem {
+public class CellQMem {
 
-    public CellMem() {
+    public CellQMem(QManager helper) {
+        this.helper = helper;
         state = null;
     }
 
@@ -12,15 +13,19 @@ public class CellMem {
         this.state = state;
     }
 
-    public QManager.QubitInfo getState() {
-        return state;
-    }
-
     public QManager.QubitInfo getRidState() {
         QManager.QubitInfo temp = state;
         state = null;
         return temp;
     }
+
+    public int measure() {
+        int result = helper.measure(state);
+        state = null;
+        return result;
+    }
+
+    private QManager helper;
 
     private QManager.QubitInfo state;
 }

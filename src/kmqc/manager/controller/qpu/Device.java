@@ -2,9 +2,9 @@ package kmqc.manager.controller.qpu;
 
 import kpfu.terentyev.quantum.emulator.api.QManager;
 
-public class CellTransistor {
+public class Device {
 
-    public CellTransistor(Placing placing) {
+    public Device(Placing placing) {
         this.placing = placing;
         state = null;
     }
