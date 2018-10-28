@@ -1,37 +1,37 @@
 package kmqc.manager.controller.qpu;
 
-import kpfu.terentyev.quantum.emulator.api.QManager;
+import kpfu.terentyev.quantum.emulator.api.Helper;
 
 public class Transistor {
 
-    public Transistor(QManager helper) {
+    public Transistor(Helper helper) {
         this.helper = helper;
         this.devL = new Device(Placing.Left);
         this.devC = new Device(Placing.Center);
         this.devR = new Device(Placing.Right);
     }
 
-    public void setLeftState(QManager.QubitInfo qubitInfo) {
+    public void setLeftState(Helper.QubitInfo qubitInfo) {
         devL.setState(qubitInfo);
     }
 
-    public void setCenterState(QManager.QubitInfo qubitInfo) {
+    public void setCenterState(Helper.QubitInfo qubitInfo) {
         devC.setState(qubitInfo);
     }
 
-    public void setRightState(QManager.QubitInfo qubitInfo) {
+    public void setRightState(Helper.QubitInfo qubitInfo) {
         devR.setState(qubitInfo);
     }
 
-    public QManager.QubitInfo getRidLeftState() {
+    public Helper.QubitInfo getRidLeftState() {
         return devL.getRidState();
     }
 
-    public QManager.QubitInfo getRidCenterState() {
+    public Helper.QubitInfo getRidCenterState() {
         return devC.getRidState();
     }
 
-    public QManager.QubitInfo getRidRightState() {
+    public Helper.QubitInfo getRidRightState() {
         return devR.getRidState();
     }
 
@@ -47,7 +47,7 @@ public class Transistor {
         helper.opCQET(devL.getState(), devC.getState(), devR.getState(), theta);
     }
 
-    private QManager helper;
+    private Helper helper;
 
     private Device devL;
     private Device devC;

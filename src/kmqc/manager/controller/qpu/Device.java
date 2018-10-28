@@ -1,6 +1,6 @@
 package kmqc.manager.controller.qpu;
 
-import kpfu.terentyev.quantum.emulator.api.QManager;
+import kpfu.terentyev.quantum.emulator.api.Helper;
 
 public class Device {
 
@@ -9,16 +9,16 @@ public class Device {
         state = null;
     }
 
-    public void setState(QManager.QubitInfo state) {
+    public void setState(Helper.QubitInfo state) {
         this.state = state;
     }
 
-    public QManager.QubitInfo getState() {
+    public Helper.QubitInfo getState() {
         return state;
     }
 
-    public QManager.QubitInfo getRidState() {
-        QManager.QubitInfo temp = state;
+    public Helper.QubitInfo getRidState() {
+        Helper.QubitInfo temp = state;
         state = null;
         return temp;
     }
@@ -29,5 +29,5 @@ public class Device {
 
     private Placing placing;
 
-    private QManager.QubitInfo state;
+    private Helper.QubitInfo state;
 }

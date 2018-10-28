@@ -1,20 +1,20 @@
 package kmqc.manager.controller.memory;
 
-import kpfu.terentyev.quantum.emulator.api.QManager;
+import kpfu.terentyev.quantum.emulator.api.Helper;
 
 public class CellQMem {
 
-    public CellQMem(QManager helper) {
+    public CellQMem(Helper helper) {
         this.helper = helper;
         state = null;
     }
 
-    public void setState(QManager.QubitInfo state) {
+    public void setState(Helper.QubitInfo state) {
         this.state = state;
     }
 
-    public QManager.QubitInfo getRidState() {
-        QManager.QubitInfo temp = state;
+    public Helper.QubitInfo getRidState() {
+        Helper.QubitInfo temp = state;
         state = null;
         return temp;
     }
@@ -25,7 +25,7 @@ public class CellQMem {
         return result;
     }
 
-    private QManager helper;
+    private Helper helper;
 
-    private QManager.QubitInfo state;
+    private Helper.QubitInfo state;
 }

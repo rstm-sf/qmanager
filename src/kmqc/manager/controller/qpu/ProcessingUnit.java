@@ -3,11 +3,11 @@ package kmqc.manager.controller.qpu;
 import java.util.ArrayList;
 import java.util.List;
 
-import kpfu.terentyev.quantum.emulator.api.QManager;
+import kpfu.terentyev.quantum.emulator.api.Helper;
 
 public class ProcessingUnit {
     
-    public ProcessingUnit(QManager helper, int countOfTransistors) {
+    public ProcessingUnit(Helper helper, int countOfTransistors) {
         this.helper = helper;
         this.countOfTransistors = countOfTransistors;
         unit = new ArrayList<Transistor>(countOfTransistors);
@@ -17,29 +17,29 @@ public class ProcessingUnit {
     }
 
     public void setLeftState(
-        int idxTransistor, QManager.QubitInfo qubitInfo) {
+        int idxTransistor, Helper.QubitInfo qubitInfo) {
         unit.get(idxTransistor).setLeftState(qubitInfo);
     }
 
     public void setCenterState(
-        int idxTransistor, QManager.QubitInfo qubitInfo) {
+        int idxTransistor, Helper.QubitInfo qubitInfo) {
         unit.get(idxTransistor).setCenterState(qubitInfo);
     }
 
     public void setRightState(
-        int idxTransistor, QManager.QubitInfo qubitInfo) {
+        int idxTransistor, Helper.QubitInfo qubitInfo) {
         unit.get(idxTransistor).setRightState(qubitInfo);
     }
 
-    public QManager.QubitInfo getRidLeftState(int idxTransistor) {
+    public Helper.QubitInfo getRidLeftState(int idxTransistor) {
         return unit.get(idxTransistor).getRidLeftState();
     }
 
-    public QManager.QubitInfo getRidCenterState(int idxTransistor) {
+    public Helper.QubitInfo getRidCenterState(int idxTransistor) {
         return unit.get(idxTransistor).getRidCenterState();
     }
 
-    public QManager.QubitInfo getRidRightState(int idxTransistor) {
+    public Helper.QubitInfo getRidRightState(int idxTransistor) {
         return unit.get(idxTransistor).getRidRightState();
     }
 
@@ -55,7 +55,7 @@ public class ProcessingUnit {
         unit.get(idxTransistor).opCQET(theta);
     }
 
-    private QManager helper;
+    private Helper helper;
 
     private int countOfTransistors;
     private List<Transistor> unit;

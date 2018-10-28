@@ -6,13 +6,13 @@ import kmqc.manager.controller.qpu.AddrDevice;
 import kmqc.manager.controller.qpu.Placing;
 import kmqc.manager.controller.qpu.ProcessingUnit;
 
-import kpfu.terentyev.quantum.emulator.api.QManager;
+import kpfu.terentyev.quantum.emulator.api.Helper;
 import kpfu.terentyev.quantum.util.ComplexDouble;
 
 public class QController {
 
     public QController() {
-        this.helper = new QManager();
+        this.helper = new Helper();
         this.qpu = new ProcessingUnit(this.helper, 1);
         this.qmem = new QMem(this.helper, 4);
         this.cmem = new CMem(2);
@@ -75,7 +75,7 @@ public class QController {
         return cmem.getState(idx);
     }
 
-    private QManager helper;
+    private Helper helper;
     private ProcessingUnit qpu;
     private QMem qmem;
     private CMem cmem;
