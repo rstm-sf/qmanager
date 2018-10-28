@@ -54,7 +54,7 @@ public class QController {
             qmem.setState(idxQMem, qpu.getRidCenterState(addr.idxTransistor));
             break;
         case Right:
-            qmem.setState(idxQMem, qpu.getRidCenterState(addr.idxTransistor));
+            qmem.setState(idxQMem, qpu.getRidRightState(addr.idxTransistor));
             break;
         }
     }
