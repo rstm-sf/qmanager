@@ -11,12 +11,21 @@ import kmqc.manager.instruction.*;
 import kpfu.terentyev.quantum.util.Complex;
 import kpfu.terentyev.quantum.util.ComplexDouble;
 
+/**
+* Главный класс для проверки наработок.
+*
+* @author rstm-sf
+* @version alpha
+*/
 public class Main {
 
     public static void main(String[] args) throws Exception {
         testDeutsch();
     }
 
+    /**
+    * Проверка на алгоритме Дойча.
+    */
     public static void testDeutsch() {
         System.out.print("Start Deutsch algorithm\n");
 
@@ -45,16 +54,31 @@ public class Main {
         System.out.print("End algorithm\n");
     }
 
+    /**
+    * Структура для хранения физических адресов кубитов из логического.
+    */
     private static class LogicalQubit {
         public int idxFirst;
         public int idxSecond;
 
+        /**
+        * Создание логического кубита.
+        *
+        * @param idxFirst  Адресс первого физического кубита. 
+        * @param idxSecond Адресс второго физического кубита. 
+        */
         public LogicalQubit(int idxFirst, int idxSecond) {
             this.idxFirst = idxFirst;
             this.idxSecond = idxSecond;
         }
     }
 
+    /**
+    * Метод, возвращающий список инициализации классического бита.
+    *
+    * @param idxCMem Индекс ячейки классической памяти.
+    * @return Список инструкций.
+    */
     private static List<QInstruction> initCBit(int idxCMem) {
         List<QInstruction> instr = new ArrayList<>(List.of(
             new InitCMem(idxCMem, 0)
@@ -62,6 +86,14 @@ public class Main {
         return instr;
     }
 
+    /**
+    * Метод, возвращающий список измерения состояния логического кубита в 
+    * в классический бит.
+    *
+    * @param q       Логический кубит.
+    * @param idxCMem Индекс ячейки классической памяти.
+    * @return Список инструкций.
+    */
     private static List<QInstruction> measure(LogicalQubit q, int idxCMem) {
         List<QInstruction> instr = new ArrayList<>(List.of(
             new Measure(q.idxFirst, idxCMem)
@@ -69,6 +101,12 @@ public class Main {
         return instr;
     }
 
+    /**
+    * Метод, возвращающий список инициализации логического кубита.
+    *
+    * @param q Логический кубит.
+    * @return Список инструкций.
+    */
     private static List<QInstruction> initLogicalQubit(LogicalQubit q) {
         List<QInstruction> instr = new ArrayList<>(List.of(
             new InitQMem(q.idxFirst, Complex.zero(), Complex.zero()),
@@ -77,6 +115,16 @@ public class Main {
         return instr;
     }
 
+    /**
+    * Метод, возвращающий список для выполнения оператора U2 из (arXiv:1707.03429).
+    * $U_2\left(\varphi,\mu\right) &= R_z\left(\varphi+\frac{\pi}{2}\right)R_x\left(\frac{\pi}{2}\right)R_z\left(\mu-\frac{\pi}{2}\right)$
+    *
+    * @param idxTransistor Индекс транзистора.
+    * @param phi           Для угла поворота вокруг оси Z.
+    * @param mu            Для угла поворота вокруг оси Z.
+    * @param q             Логический кубит на который производится действие.
+    * @return Список инструкций.
+    */
     private static List<QInstruction> opU2(
         int idxTransistor, double phi, double mu, LogicalQubit q) {
         AddrDevice addrL = new AddrDevice(idxTransistor, Placing.Left);
@@ -93,6 +141,17 @@ public class Main {
         return instr;
     }
 
+    /**
+    * Метод, возвращающий список для выполнения оператора U3 из (arXiv:1707.03429).
+    * $U_3\left(\theta,\varphi,\mu\right) &= R_z\left(\varphi+3\pi\right)R_x\left(\pi\right)R_z\left(\theta+\pi\right)R_x\left(\pi\right)R_z\left(\mu\right)$
+    *
+    * @param idxTransistor Индекс транзистора.
+    * @param theta         Для угла поворота вокруг оси Z.
+    * @param phi           Для угла поворота вокруг оси Z.
+    * @param mu            Для угла поворота вокруг оси Z.
+    * @param q             Логический кубит на который производится действие.
+    * @return Список инструкций.
+    */
     private static List<QInstruction> opU3(
         int idxTransistor,
         double theta, double phi, double mu,
@@ -113,6 +172,14 @@ public class Main {
         return instr;
     }
 
+    /**
+    * Метод, возвращающий список для выполнения гейта CNOT.
+    *
+    * @param idxTransistor Индекс транзистора.
+    * @param qA            "Контролирующий" логический кубит.
+    * @param qC            Логический кубит на который производится действие.
+    * @return Список инструкций.
+    */
     private static List<QInstruction> gateCNOT(
         int idxTransistor, LogicalQubit qA, LogicalQubit qC) {
         AddrDevice addrL = new AddrDevice(idxTransistor, Placing.Left);
@@ -133,12 +200,26 @@ public class Main {
         return instr;
     }
 
+    /**
+    * Метод, возвращающий список для выполнения гейта X.
+    *
+    * @param idxTransistor Индекс транзистора.
+    * @param q             Логический кубит на который производится действие.
+    * @return Список инструкций.
+    */
     private static List<QInstruction> gateX(int idxTransistor, LogicalQubit q) {
         List<QInstruction> instr = new ArrayList<>();
         instr.addAll(opU3(idxTransistor, Math.PI, 0.0, Math.PI, q));
         return instr;
     }
 
+    /**
+    * Метод, возвращающий список для выполнения гейта H.
+    *
+    * @param idxTransistor Индекс транзистора.
+    * @param q             Логический кубит на который производится действие.
+    * @return Список инструкций.
+    */
     private static List<QInstruction> gateH(int idxTransistor, LogicalQubit q) {
         List<QInstruction> instr = new ArrayList<>();
         instr.addAll(opU2(idxTransistor, 0.0, Math.PI, q));

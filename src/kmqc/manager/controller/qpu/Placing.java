@@ -1,5 +1,11 @@
 package kmqc.manager.controller.qpu;
 
+/**
+* Перечисление, задающие положение вывода в транзисторе.
+*
+* @author rstm-sf
+* @version alpha
+*/
 public enum Placing {
     Left,
     Center,

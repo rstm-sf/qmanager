@@ -2,23 +2,49 @@ package kmqc.manager.controller.memory;
 
 import kpfu.terentyev.quantum.emulator.api.Helper;
 
+/**
+* Класс, реализующий работу ячейку квантовой памяти.
+*
+* @author rstm-sf
+* @version alpha
+*/
 public class CellQMem {
 
+    /**
+    * Создание ячейки памяти. 
+    *
+    * @param helper Обеспечивает связь с API.
+    */
     public CellQMem(Helper helper) {
         this.helper = helper;
         state = null;
     }
 
+    /**
+    * Переносит состояние кубита в ячейку памяти.
+    *
+    * @param state Состояние кубита.
+    */
     public void setState(Helper.QubitInfo state) {
         this.state = state;
     }
 
+    /**
+    * Возвращает состояние кубита из ячейки памяти, обнуляя состояние ячейки.
+    *
+    * @return Состояние кубита.
+    */
     public Helper.QubitInfo getRidState() {
         Helper.QubitInfo temp = state;
         state = null;
         return temp;
     }
 
+    /**
+    * Измеряет состояние кубита из ячейки памяти, обнуляя состояние ячейки.
+    *
+    * @return Измеренное состояние кубита.
+    */
     public int measure() throws Exception {
         int result = helper.measure(state);
         state = null;
