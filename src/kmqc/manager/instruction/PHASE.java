@@ -8,7 +8,11 @@ public class PHASE extends QInstruction {
     }
 
     public void execute() {
-        qController.opPHASE(idxTransistor, theta);
+        try {
+            qController.opPHASE(idxTransistor, theta);
+        } catch (Exception exc) {
+            throw new IllegalStateException(exc);
+        }
     }
 
     private int idxTransistor;

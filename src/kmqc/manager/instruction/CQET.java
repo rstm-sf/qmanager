@@ -8,7 +8,11 @@ public class CQET extends QInstruction {
     }
 
     public void execute() {
-        qController.opQET(idxTransistor, theta);
+        try {
+            qController.opQET(idxTransistor, theta);
+        } catch (Exception exc) {
+            throw new IllegalStateException(exc);
+        }
     }
 
     private int idxTransistor;
