@@ -188,14 +188,12 @@ public class Main {
         List<QInstruction> instr = new ArrayList<>(List.of(
             new Load(qC.idxFirst, addrL),
             new Load(qC.idxSecond, addrR),
-            new Load(qA.idxFirst, addrC),
-            new QET(  idxTransistor, Math.PI),
+            new Load(qA.idxSecond, addrC),
             new CQET( idxTransistor, Math.PI),
             new PHASE(idxTransistor, Math.PI / 2.0),
-            new QET(  idxTransistor, Math.PI),
             new Store(addrL, qC.idxFirst),
             new Store(addrR, qC.idxSecond),
-            new Store(addrC, qA.idxFirst)
+            new Store(addrC, qA.idxSecond)
         ));
         return instr;
     }
