@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"kmqc.manager"},{"l":"kmqc.manager.controller"},{"l":"kmqc.manager.controller.memory"},{"l":"kmqc.manager.controller.qpu"},{"l":"kmqc.manager.instruction"}]
