@@ -245,7 +245,7 @@ public class Main {
 
     /**
     * Метод, возвращающий список для выполнения оператора U2 из (arXiv:1707.03429).
-    * $U_2\left(\varphi,\mu\right) &= R_z\left(\varphi+\frac{\pi}{2}\right)R_x\left(\frac{\pi}{2}\right)R_z\left(\mu-\frac{\pi}{2}\right)$
+    * $U_2\left(\varphi,\mu\right) = R_z\left(\varphi+\frac{\pi}{2}\right)R_x\left(\frac{\pi}{2}\right)R_z\left(\mu-\frac{\pi}{2}\right)$
     *
     * @param idxTransistor Индекс транзистора.
     * @param phi           Для угла поворота вокруг оси Z.
@@ -271,7 +271,7 @@ public class Main {
 
     /**
     * Метод, возвращающий список для выполнения оператора U3 из (arXiv:1707.03429).
-    * $U_3\left(\theta,\varphi,\mu\right) &= R_z\left(\varphi+3\pi\right)R_x\left(\pi\right)R_z\left(\theta+\pi\right)R_x\left(\pi\right)R_z\left(\mu\right)$
+    * $U_3\left(\theta,\varphi,\mu\right) = R_z\left(\varphi+3\pi\right)R_x\left(\pi\right)R_z\left(\theta+\pi\right)R_x\left(\pi\right)R_z\left(\mu\right)$
     *
     * @param idxTransistor Индекс транзистора.
     * @param theta         Для угла поворота вокруг оси Z.
