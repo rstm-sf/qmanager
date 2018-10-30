@@ -65,7 +65,6 @@ public class QManager {
 
     // QubitInfo creation
     public QubitInfo initNewQubit() throws Exception {
-        //! Почему (1, 0)?
         return initNewQubit(Complex.unit(), Complex.zero());
     }
 

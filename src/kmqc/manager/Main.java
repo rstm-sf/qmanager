@@ -20,16 +20,18 @@ import kpfu.terentyev.quantum.util.ComplexDouble;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        testDeutsch();
+        testDeutsch(1);
         System.out.print("\n");
         testCNOT();
     }
 
     /**
     * Проверка на алгоритме Дойча.
+    *
+    * @param option Вариант универсального оператора.
     */
-    public static void testDeutsch() {
-        System.out.print("Start Deutsch algorithm\n");
+    public static void testDeutsch(int option) {
+        System.out.print("Start Deutsch algorithm. Uf_" + option + "\n");
 
         int idxCMem = 0;
         LogicalQubit q0 = new LogicalQubit(0, 1);
@@ -43,7 +45,7 @@ public class Main {
         instructions.addAll(gateX(idxTransistor, q1));
         instructions.addAll(gateH(idxTransistor, q0));
         instructions.addAll(gateH(idxTransistor, q1));
-        instructions.addAll(gateCNOT(idxTransistor, q1, q0));
+        instructions.addAll(universalFun(option, idxTransistor, q0, q1));
         instructions.addAll(gateH(idxTransistor, q0));
         instructions.addAll(measure(q0, idxCMem));
 
@@ -54,6 +56,39 @@ public class Main {
         System.out.print(
             "q0: " + QInstruction.getIdxCMem(idxCMem).toString() + "\n");
         System.out.print("End algorithm\n");
+    }
+
+    /**
+    * Универсальный оператор функции для алгоритма Дойча.
+    *
+    * @param option        Вариант оператора.
+    * <p> 1: X q1;
+    * <p> 2: CNOT q0, q1;
+    * <p> 3: X q0; CNOT q0, q1;
+    * <p> Остальные значения: ничего не будет выполнено.
+    * @param idxTransistor Индекс транзистора.
+    * @param q0            Первый логический кубит.
+    * @param q0            Второй логический кубит.
+    * @return Список инструкций.
+    */ 
+    private static List<QInstruction> universalFun(
+        int option, int idxTransistor, LogicalQubit q0, LogicalQubit q1) {
+        List<QInstruction> instr = new ArrayList<>();
+        switch (option) {
+        case 1:
+            instr.addAll(gateX(idxTransistor, q1));
+            break;
+        case 2:
+            instr.addAll(gateCNOT(idxTransistor, q0, q1));
+            break;
+        case 3:
+            instr.addAll(gateX(idxTransistor, q0));
+            instr.addAll(gateCNOT(idxTransistor, q0, q1));
+            break;
+        default:
+            break;    
+        }
+        return instr;
     }
 
     /**
