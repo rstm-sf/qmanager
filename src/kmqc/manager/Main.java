@@ -56,6 +56,9 @@ public class Main {
         System.out.print("End algorithm\n");
     }
 
+    /**
+    * Проверка гейта CNOT таблицей истенностью.
+    */
     public static void testCNOT() {
         System.out.print("Start CNOT Test\n");
         System.out.print("q0 │ q1 | res\n");
@@ -66,6 +69,10 @@ public class Main {
         System.out.print("End Test\n");
     }
 
+    /**
+    * Проверка гейта CNOT таблицей истенностью.
+    * Вариант 0, 0.
+    */
     public static void testCNOT_0() {
         System.out.print(" 0 │  0 │  ");
 
@@ -88,30 +95,11 @@ public class Main {
         System.out.print(QInstruction.getIdxCMem(idxCMem).toString() + "\n");
     }
 
+    /**
+    * Проверка гейта CNOT таблицей истенностью.
+    * Вариант 0, 1.
+    */
     public static void testCNOT_1() {
-        System.out.print(" 1 │  0 │  ");
-
-        int idxCMem = 0;
-        LogicalQubit q0 = new LogicalQubit(0, 1);
-        LogicalQubit q1 = new LogicalQubit(2, 3);
-        int idxTransistor = 0;
-
-        List<QInstruction> instructions = new ArrayList<>();
-        instructions.addAll(initCBit(idxCMem));
-        instructions.addAll(initLogicalQubit(q0));
-        instructions.addAll(initLogicalQubit(q1));
-        instructions.addAll(gateX(idxTransistor, q0));
-        instructions.addAll(gateCNOT(idxTransistor, q0, q1));
-        instructions.addAll(measure(q1, idxCMem));
-
-        for (QInstruction instruction : instructions) {
-            instruction.execute();
-        }
-
-        System.out.print(QInstruction.getIdxCMem(idxCMem).toString() + "\n");
-    }
-
-    public static void testCNOT_2() {
         System.out.print(" 0 │  1 │  ");
 
         int idxCMem = 0;
@@ -134,6 +122,38 @@ public class Main {
         System.out.print(QInstruction.getIdxCMem(idxCMem).toString() + "\n");
     }
 
+    /**
+    * Проверка гейта CNOT таблицей истенностью.
+    * Вариант 1, 0.
+    */
+    public static void testCNOT_2() {
+        System.out.print(" 1 │  0 │  ");
+
+        int idxCMem = 0;
+        LogicalQubit q0 = new LogicalQubit(0, 1);
+        LogicalQubit q1 = new LogicalQubit(2, 3);
+        int idxTransistor = 0;
+
+        List<QInstruction> instructions = new ArrayList<>();
+        instructions.addAll(initCBit(idxCMem));
+        instructions.addAll(initLogicalQubit(q0));
+        instructions.addAll(initLogicalQubit(q1));
+        instructions.addAll(gateX(idxTransistor, q0));
+        instructions.addAll(gateCNOT(idxTransistor, q0, q1));
+        instructions.addAll(measure(q1, idxCMem));
+
+        for (QInstruction instruction : instructions) {
+            instruction.execute();
+        }
+
+        System.out.print(QInstruction.getIdxCMem(idxCMem).toString() + "\n");
+    }
+
+
+    /**
+    * Проверка гейта CNOT таблицей истенностью.
+    * Вариант 1, 1.
+    */
     public static void testCNOT_3() {
         System.out.print(" 1 │  1 │  ");
 
@@ -206,15 +226,19 @@ public class Main {
     }
 
     /**
-    * Метод, возвращающий список инициализации логического кубита.
+    * Метод, возвращающий список инициализации логического кубита
+    * в состоянии &#124;0_L&gt; = {
+    *                               (1 * &#124;0&gt; + 0 * &#124;1&gt;), 
+    *                               (0 * &#124;0&gt; + 1 * &#124;1&gt;)
+    *                             }
     *
     * @param q Логический кубит.
     * @return Список инструкций.
     */
     private static List<QInstruction> initLogicalQubit(LogicalQubit q) {
         List<QInstruction> instr = new ArrayList<>(List.of(
-            new InitQMem(q.idxFirst, Complex.zero(), Complex.zero()),
-            new InitQMem(q.idxSecond, Complex.unit(), Complex.zero())
+            new InitQMem(q.idxFirst, Complex.unit(), Complex.zero()),
+            new InitQMem(q.idxSecond, Complex.zero(), Complex.unit())
         ));
         return instr;
     }
