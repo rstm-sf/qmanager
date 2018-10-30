@@ -45,6 +45,9 @@ public class CMem {
         return memory.get(idxCell);
     }
 
+    /** Количество ячеек в классической памяти */
     int maxCellCMem;
+
+    /** Список ячеек классической памяти */
     List<Integer> memory; 
 }

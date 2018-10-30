@@ -108,9 +108,15 @@ public class Transistor {
         helper.opCQET(devL.getState(), devC.getState(), devR.getState(), theta);
     }
 
+    /** Помошник, обеспечивающий связь с API */
     private Helper helper;
 
+    /** "Левый" вывод */
     private Device devL;
+
+    /** "Центральный" вывод */
     private Device devC;
+
+    /** "Правый" вывод */
     private Device devR;
 }

@@ -128,8 +128,12 @@ public class ProcessingUnit {
         unit.get(idxTransistor).opCQET(theta);
     }
 
+    /** Помошник, обеспечивающий связь с API */
     private Helper helper;
 
+    /** Количество транзисторов */
     private int countOfTransistors;
+
+    /** Список процессорных устройств */
     private List<Transistor> unit;
 }

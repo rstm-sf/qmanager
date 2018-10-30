@@ -59,7 +59,9 @@ public class Device {
         return placing;
     }
 
+    /** Расположение вывода в транзисторе */
     private Placing placing;
 
+    /** Состояние кубита */
     private Helper.QubitInfo state;
 }

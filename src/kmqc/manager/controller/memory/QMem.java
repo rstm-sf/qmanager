@@ -81,8 +81,12 @@ public class QMem {
         return memory.get(idxCell).measure();
     }
 
+    /** Помошник, обеспечивающий связь с API */
     private Helper helper;
 
+    /** Количество ячеек в квантовой памяти */
     private int maxCellQMem;
+
+    /** Список ячеек квантовой памяти */
     private List<CellQMem> memory;
 }

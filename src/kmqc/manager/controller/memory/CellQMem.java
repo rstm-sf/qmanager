@@ -51,7 +51,9 @@ public class CellQMem {
         return result;
     }
 
+    /** Помошник, обеспечивающий связь с API */
     private Helper helper;
 
+    /** Состояние кубита */
     private Helper.QubitInfo state;
 }

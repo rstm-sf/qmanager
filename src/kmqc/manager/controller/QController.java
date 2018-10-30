@@ -147,8 +147,15 @@ public class QController {
         return cmem.getState(idx);
     }
 
+    /** Помошник, обеспечивающий связь с API */
     private Helper helper;
+
+    /** Процессорное устройство */
     private ProcessingUnit qpu;
+
+    /** Квантовая память */
     private QMem qmem;
+
+    /** Классическая память */
     private CMem cmem;
 }

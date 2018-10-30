@@ -19,6 +19,9 @@ public class AddrDevice {
         this.placing = placing;
     }
 
+    /** Индекс транзистора */
     public int idxTransistor;
+
+    /** Раположения вывода в транзисторе */
     public Placing placing;
 }
