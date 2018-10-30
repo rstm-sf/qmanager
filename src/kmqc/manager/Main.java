@@ -21,6 +21,8 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         testDeutsch();
+        System.out.print("\n");
+        testCNOT();
     }
 
     /**
@@ -52,6 +54,108 @@ public class Main {
         System.out.print(
             "q0: " + QInstruction.getIdxCMem(idxCMem).toString() + "\n");
         System.out.print("End algorithm\n");
+    }
+
+    public static void testCNOT() {
+        System.out.print("Start CNOT Test\n");
+        System.out.print("q0 │ q1 | res\n");
+        testCNOT_0();
+        testCNOT_1();
+        testCNOT_2();
+        testCNOT_3();
+        System.out.print("End Test\n");
+    }
+
+    public static void testCNOT_0() {
+        System.out.print(" 0 │  0 │  ");
+
+        int idxCMem = 0;
+        LogicalQubit q0 = new LogicalQubit(0, 1);
+        LogicalQubit q1 = new LogicalQubit(2, 3);
+        int idxTransistor = 0;
+
+        List<QInstruction> instructions = new ArrayList<>();
+        instructions.addAll(initCBit(idxCMem));
+        instructions.addAll(initLogicalQubit(q0));
+        instructions.addAll(initLogicalQubit(q1));
+        instructions.addAll(gateCNOT(idxTransistor, q0, q1));
+        instructions.addAll(measure(q1, idxCMem));
+
+        for (QInstruction instruction : instructions) {
+            instruction.execute();
+        }
+
+        System.out.print(QInstruction.getIdxCMem(idxCMem).toString() + "\n");
+    }
+
+    public static void testCNOT_1() {
+        System.out.print(" 1 │  0 │  ");
+
+        int idxCMem = 0;
+        LogicalQubit q0 = new LogicalQubit(0, 1);
+        LogicalQubit q1 = new LogicalQubit(2, 3);
+        int idxTransistor = 0;
+
+        List<QInstruction> instructions = new ArrayList<>();
+        instructions.addAll(initCBit(idxCMem));
+        instructions.addAll(initLogicalQubit(q0));
+        instructions.addAll(initLogicalQubit(q1));
+        instructions.addAll(gateX(idxTransistor, q0));
+        instructions.addAll(gateCNOT(idxTransistor, q0, q1));
+        instructions.addAll(measure(q1, idxCMem));
+
+        for (QInstruction instruction : instructions) {
+            instruction.execute();
+        }
+
+        System.out.print(QInstruction.getIdxCMem(idxCMem).toString() + "\n");
+    }
+
+    public static void testCNOT_2() {
+        System.out.print(" 0 │  1 │  ");
+
+        int idxCMem = 0;
+        LogicalQubit q0 = new LogicalQubit(0, 1);
+        LogicalQubit q1 = new LogicalQubit(2, 3);
+        int idxTransistor = 0;
+
+        List<QInstruction> instructions = new ArrayList<>();
+        instructions.addAll(initCBit(idxCMem));
+        instructions.addAll(initLogicalQubit(q0));
+        instructions.addAll(initLogicalQubit(q1));
+        instructions.addAll(gateX(idxTransistor, q1));
+        instructions.addAll(gateCNOT(idxTransistor, q0, q1));
+        instructions.addAll(measure(q1, idxCMem));
+
+        for (QInstruction instruction : instructions) {
+            instruction.execute();
+        }
+
+        System.out.print(QInstruction.getIdxCMem(idxCMem).toString() + "\n");
+    }
+
+    public static void testCNOT_3() {
+        System.out.print(" 1 │  1 │  ");
+
+        int idxCMem = 0;
+        LogicalQubit q0 = new LogicalQubit(0, 1);
+        LogicalQubit q1 = new LogicalQubit(2, 3);
+        int idxTransistor = 0;
+
+        List<QInstruction> instructions = new ArrayList<>();
+        instructions.addAll(initCBit(idxCMem));
+        instructions.addAll(initLogicalQubit(q0));
+        instructions.addAll(initLogicalQubit(q1));
+        instructions.addAll(gateX(idxTransistor, q0));
+        instructions.addAll(gateX(idxTransistor, q1));
+        instructions.addAll(gateCNOT(idxTransistor, q0, q1));
+        instructions.addAll(measure(q1, idxCMem));
+
+        for (QInstruction instruction : instructions) {
+            instruction.execute();
+        }
+
+        System.out.print(QInstruction.getIdxCMem(idxCMem).toString() + "\n");
     }
 
     /**
