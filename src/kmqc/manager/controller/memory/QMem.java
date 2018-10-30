@@ -62,8 +62,8 @@ public class QMem {
     * Создание кубита в заданном состоянии &#124;\psi&gt; = alpha * &#124;0&gt; + beta * &#124;1&gt;.
     *
     * @param idxCell Индекс ячейки памяти.
-    * @param alpha   Вероятность состояния &#124;0&gt;.
-    * @param beta    Вероятность состояния &#124;1&gt;.
+    * @param alpha   Амплитуда вероятности состояния &#124;0&gt;.
+    * @param beta    Амплитуда вероятности состояния &#124;1&gt;.
     */
     public void initState(
         int idxCell, ComplexDouble alpha, ComplexDouble beta) throws Exception {

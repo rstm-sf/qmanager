@@ -15,8 +15,8 @@ public class InitQMem extends QInstruction {
     * Создание инструкции инициализации.
     * 
     * @param idx   Индекс ячейки классической памяти.
-    * @param alpha Вероятность состояния &#124;0&gt;.
-    * @param beta  Вероятность состояния &#124;1&gt;.
+    * @param alpha Амплитуда вероятности состояния &#124;0&gt;.
+    * @param beta  Амплитуда вероятности состояния &#124;1&gt;.
     */
     public InitQMem(int idx, ComplexDouble alpha, ComplexDouble beta) {
         this.idx = idx;
@@ -35,7 +35,12 @@ public class InitQMem extends QInstruction {
         }
     }
 
+    /** Индекс ячейки квантовой памяти */
     private int idx;
+
+    /** Амплитуда вероятности состояния &#124;0&gt */
     private ComplexDouble alpha;
+
+    /** Амплитуда вероятности состояния &#124;1&gt */
     private ComplexDouble beta;
 }

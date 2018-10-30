@@ -31,6 +31,9 @@ public class CQET extends QInstruction {
         }
     }
 
+    /** Индекс транзистора */
     private int idxTransistor;
+
+    /** Угол поворота */
     private double theta;
 }

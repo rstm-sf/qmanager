@@ -30,6 +30,9 @@ public class Store extends QInstruction {
         qController.store(addr, idxQMem);
     }
 
+    /** Адресс вывода транзистора */
     private AddrDevice addr;
+
+    /** Индекс ячейки квантовой памяти */
     private int idxQMem;
 }

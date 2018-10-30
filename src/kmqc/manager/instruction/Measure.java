@@ -31,6 +31,9 @@ public class Measure extends QInstruction {
         }
     }
 
+    /** Индекс ячейки квантовой памяти */
     private int idxQMem;
+
+    /** Индекс ячейки классической памяти */
     private int idxCMem;
 }

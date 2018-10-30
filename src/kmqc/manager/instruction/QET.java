@@ -31,6 +31,9 @@ public class QET extends QInstruction {
         }
     }
 
+    /** Индекс транзистора в процессорном устройстве */
     private int idxTransistor;
+
+    /** Угол поворота */
     private double theta;
 }

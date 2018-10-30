@@ -30,6 +30,9 @@ public class Load extends QInstruction {
         qController.load(idxQMem, addr);
     }
 
+    /** Индекс ячейки квантовой памяти */
     private int idxQMem;
+
+    /** Адресс вывода транзистора */
     private AddrDevice addr;
 }

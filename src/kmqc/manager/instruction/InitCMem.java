@@ -27,6 +27,9 @@ public class InitCMem extends QInstruction {
         qController.init(idx, state);
     }
 
+    /** Индекс ячейки классической памяти */
     private int idx;
+
+    /** Значение бита */
     private Integer state;
 }
