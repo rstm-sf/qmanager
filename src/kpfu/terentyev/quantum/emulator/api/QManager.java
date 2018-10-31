@@ -158,26 +158,6 @@ public class QManager {
             transitionMatrix));
     }
 
-    public void performTransitionForQubits (
-        QubitInfo         controlQubit,
-        ComplexDouble[][] transitionMatrix,
-        QubitInfo ...     qubits
-    ) throws Exception {
-        ArrayList<QubitInfo> allQubits = new ArrayList<QubitInfo>();
-        for (QubitInfo q: qubits){
-            allQubits.add(q);
-        }
-
-        if (controlQubit != null) {
-            allQubits.add(controlQubit);
-        }
-
-        QubitInfo[] qubitsArray = new QubitInfo[allQubits.size()];
-        qubitsArray = allQubits.toArray(qubitsArray);
-        QRegInfo info = checkAndMergeRegistersIfNeedForQubits(qubitsArray);
-        performTransitionForQubits(controlQubit, transitionMatrix, info, qubits);
-    }
-
     // Operations
     public int measure (QubitInfo qubit) throws Exception {
         //TODO: remove reg if qubits count is 0
