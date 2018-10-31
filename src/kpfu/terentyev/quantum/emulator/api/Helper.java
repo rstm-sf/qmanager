@@ -107,25 +107,25 @@ public class Helper extends QManager {
             };
         } else if (isLastC) {
             return new ComplexDouble[][] {
-                {z, z, z, z, u,  z,  z, z},
-                {u, z, z, z, z,  z,  z, z},
-                {z, z, z, z, z, co, si, z},
-                {z, u, z, z, z,  z,  z, z},
-                {z, z, z, z, z, si, co, z},
-                {z, z, u, z, z,  z,  z, z},
-                {z, z, z, z, z,  z,  z, u},
-                {z, z, z, u, z,  z,  z, z}
+                {u, z,  z, z,  z, z, z, z},
+                {z, u,  z, z,  z, z, z, z},
+                {z, z, co, z, si, z, z, z},
+                {z, z,  z, u,  z, z, z, z},
+                {z, z, si, z, co, z, z, z},
+                {z, z,  z, z,  z, u, z, z},
+                {z, z,  z, z,  z, z, u, z},
+                {z, z,  z, z,  z, z, z, u}
             };
         } else {
             return new ComplexDouble[][] {
-                {z, z, u,  z,  z, z, z, z},
-                {z, z, z, co, si, z, z, z},
-                {u, z, z,  z,  z, z, z, z},
-                {z, u, z,  z,  z, z, z, z},
-                {z, z, z, si, co, z, z, z},
-                {z, z, z,  z,  z, u, z, z},
-                {z, z, z,  z,  z, z, u, z},
-                {z, z, z,  z,  z, z, z, u}
+                {u,  z, z, z,  z, z, z, z},
+                {z, co, z, z, si, z, z, z},
+                {z,  z, u, z,  z, z, z, z},
+                {z,  z, z, u,  z, z, z, z},
+                {z, si, z, z, co, z, z, z},
+                {z,  z, z, z,  z, u, z, z},
+                {z,  z, z, z,  z, z, u, z},
+                {z,  z, z, z,  z, z, z, u}
             };
         }
     }
