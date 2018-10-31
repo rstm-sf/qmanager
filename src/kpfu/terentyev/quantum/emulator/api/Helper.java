@@ -34,6 +34,13 @@ public class Helper extends QManager {
         performTransitionForQubits(null, matCQET, info, a, b, c);
     }
 
+    public void merge2qubit(QubitInfo q1, QubitInfo q2) throws Exception {
+        QubitInfo[] qubitsArray = new QubitInfo[2];
+        qubitsArray[0] = q1;
+        qubitsArray[1] = q2;
+        checkAndMergeRegistersIfNeedForQubits(qubitsArray);
+    }
+
     private static ComplexDouble[][] generateMatQET(double theta) {
         return new ComplexDouble[][] {
             {

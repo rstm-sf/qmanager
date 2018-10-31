@@ -277,7 +277,8 @@ public class Main {
     private static List<QInstruction> initLogicalQubit(LogicalQubit q) {
         List<QInstruction> instr = new ArrayList<>(List.of(
             new InitQMem(q.idxFirst, Complex.unit(), Complex.zero()),
-            new InitQMem(q.idxSecond, Complex.zero(), Complex.unit())
+            new InitQMem(q.idxSecond, Complex.zero(), Complex.unit()),
+            new Merge(q.idxFirst, q.idxSecond)
         ));
         return instr;
     }

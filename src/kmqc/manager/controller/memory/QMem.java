@@ -72,6 +72,17 @@ public class QMem {
     }
 
     /**
+    * Объединение кубитов в один квантовый регистр.
+    *
+    * @param idxCell1 Первый индекс ячейки квантовой памяти.
+    * @param idxCell2 Второй индекс ячейки квантовой памяти.
+    */
+    public void merge(int idxCell1, int idxCell2) throws Exception {
+        helper.merge2qubit(
+            memory.get(idxCell1).getState(), memory.get(idxCell2).getState());
+    }
+
+    /**
     * Измеряет состояние кубита из ячейки памяти.
     *
     * @param idxCell Индекс ячейки памяти.

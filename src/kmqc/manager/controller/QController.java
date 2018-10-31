@@ -54,6 +54,16 @@ public class QController {
     }
 
     /**
+    * Объединение кубитов в один квантовый регистр.
+    *
+    * @param idxQMem1 Первый индекс ячейки квантовой памяти.
+    * @param idxQMem2 Второй индекс ячейки квантовой памяти.
+    */
+    public void merge(int idxQMem1, int idxQMem2) throws Exception {
+        qmem.merge(idxQMem1, idxQMem2);
+    }
+
+    /**
     * Измерение состояния кубита в ячейке квантовой памяти в классическю память. 
     *
     * @param idxQMem Индекс ячейки квантовой памяти.
