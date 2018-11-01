@@ -39,7 +39,7 @@ public class QReg {
     }
 
     private Matrix densMat4ClearStageConfigurationVec(Vector vector) {
-        return vector.braketTimes(vector);
+        return vector.ketbraTimes(vector);
     }
 
     @Override

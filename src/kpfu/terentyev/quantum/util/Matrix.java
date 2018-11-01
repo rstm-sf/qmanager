@@ -78,9 +78,12 @@ final public class Matrix {
     }
 
     public ComplexDouble trace() {
+        Matrix A = this;
+        if (A.N != A.M)
+            throw new RuntimeException("Matrix is not square.");
         ComplexDouble result = Complex.zero();
         for (int i = 0; i < M; i++)
-            result = ComplexDouble.cuCadd(result, this.data[i][i]);
+            result = ComplexDouble.cuCadd(result, A.data[i][i]);
         return result;
     }
 

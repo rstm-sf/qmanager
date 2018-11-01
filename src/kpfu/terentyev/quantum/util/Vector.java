@@ -56,7 +56,7 @@ final public class Vector {
         return C;
     }
 
-    public Matrix braketTimes(Vector B) {
+    public Matrix ketbraTimes(Vector B) {
         Vector A = this;
         Matrix C = new Matrix(A.M, B.M);
         for (int i1 = 0; i1 < A.M; i1++)
