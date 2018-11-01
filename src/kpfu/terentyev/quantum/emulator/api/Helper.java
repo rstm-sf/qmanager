@@ -2,6 +2,7 @@ package kpfu.terentyev.quantum.emulator.api;
 
 import kpfu.terentyev.quantum.util.Complex;
 import kpfu.terentyev.quantum.util.ComplexDouble;
+import kpfu.terentyev.quantum.util.Matrix;
 
 public class Helper extends QManager {
 
@@ -12,14 +13,14 @@ public class Helper extends QManager {
     public void opQET(
         QubitInfo a, QubitInfo b, double theta) throws Exception {
         QRegInfo info = checkAndMergeRegistersIfNeedForQubits(a, b);
-        ComplexDouble[][] matQET = generateMatQET(theta);
+        Matrix matQET = generateMatQET(theta);
         performTransitionForQubits(null, matQET, info, a, b);
     }
 
     public void opPHASE(
         QubitInfo a, QubitInfo b, double theta) throws Exception {
         QRegInfo info = checkAndMergeRegistersIfNeedForQubits(a, b);
-        ComplexDouble[][] matPHASE = generateMatPHASE(theta);
+        Matrix matPHASE = generateMatPHASE(theta);
         performTransitionForQubits(null, matPHASE, info, a, b);
     }
 
@@ -30,7 +31,7 @@ public class Helper extends QManager {
                          && getIdxInReg(c) < getIdxInReg(b);
         boolean isLastC  =  getIdxInReg(c) > getIdxInReg(a)
                          && getIdxInReg(c) > getIdxInReg(b);
-        ComplexDouble[][] matCQET = generateMatCQET(theta, isFirstC, isLastC);
+        Matrix matCQET = generateMatCQET(theta, isFirstC, isLastC);
         performTransitionForQubits(null, matCQET, info, a, b, c);
     }
 
@@ -41,8 +42,8 @@ public class Helper extends QManager {
         checkAndMergeRegistersIfNeedForQubits(qubitsArray);
     }
 
-    private static ComplexDouble[][] generateMatQET(double theta) {
-        return new ComplexDouble[][] {
+    private static Matrix generateMatQET(double theta) {
+        return new Matrix(new ComplexDouble[][] {
             {
                 Complex.unit(), Complex.zero(), Complex.zero(), Complex.zero()
             },
@@ -61,11 +62,11 @@ public class Helper extends QManager {
             {
                 Complex.zero(), Complex.zero(), Complex.zero(), Complex.unit()
             }
-        };
+        });
     }
 
-    private static ComplexDouble[][] generateMatPHASE(double theta) {
-        return new ComplexDouble[][] {
+    private static Matrix generateMatPHASE(double theta) {
+        return new Matrix(new ComplexDouble[][] {
             {
                 Complex.unit(), Complex.zero(), Complex.zero(), Complex.zero()
             },
@@ -84,10 +85,10 @@ public class Helper extends QManager {
             {
                 Complex.zero(), Complex.zero(), Complex.zero(), Complex.unit()
             }
-        };
+        });
     }
 
-    private static ComplexDouble[][] generateMatCQET(
+    private static Matrix generateMatCQET(
         double theta, boolean isFirstC, boolean isLastC) {
         final ComplexDouble z  = Complex.zero();
         final ComplexDouble u  = Complex.unit();
@@ -95,7 +96,7 @@ public class Helper extends QManager {
         final ComplexDouble si = Complex.complex(0.0, Math.sin(theta / 2.0));
 
         if (isFirstC) {
-            return new ComplexDouble[][] {
+            return new Matrix(new ComplexDouble[][] {
                 {u,  z,  z, z, z, z, z, z},
                 {z, co, si, z, z, z, z, z},
                 {z, si, co, z, z, z ,z, z},
@@ -104,9 +105,9 @@ public class Helper extends QManager {
                 {z,  z,  z, z, z, u, z, z},
                 {z,  z,  z, z, z, z, u, z},
                 {z,  z,  z, z, z, z, z, u}
-            };
+            });
         } else if (isLastC) {
-            return new ComplexDouble[][] {
+            return new Matrix(new ComplexDouble[][] {
                 {u, z,  z, z,  z, z, z, z},
                 {z, u,  z, z,  z, z, z, z},
                 {z, z, co, z, si, z, z, z},
@@ -115,9 +116,9 @@ public class Helper extends QManager {
                 {z, z,  z, z,  z, u, z, z},
                 {z, z,  z, z,  z, z, u, z},
                 {z, z,  z, z,  z, z, z, u}
-            };
+            });
         } else {
-            return new ComplexDouble[][] {
+            return new Matrix(new ComplexDouble[][] {
                 {u,  z, z, z,  z, z, z, z},
                 {z, co, z, z, si, z, z, z},
                 {z,  z, u, z,  z, z, z, z},
@@ -126,7 +127,7 @@ public class Helper extends QManager {
                 {z,  z, z, z,  z, u, z, z},
                 {z,  z, z, z,  z, z, u, z},
                 {z,  z, z, z,  z, z, z, u}
-            };
+            });
         }
     }
 }

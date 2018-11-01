@@ -7,8 +7,9 @@ import java.util.Random;
 
 import kpfu.terentyev.quantum.emulator.core.*;
 import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.ComplexMath;
 import kpfu.terentyev.quantum.util.ComplexDouble;
+import kpfu.terentyev.quantum.util.Matrix;
+import kpfu.terentyev.quantum.util.Vector;
 
 import static kpfu.terentyev.quantum.emulator.core.QAlgorithmOneStep.NotAnIndex;
 
@@ -71,7 +72,8 @@ public class QManager {
     public QubitInfo initNewQubit(
         ComplexDouble alpha, ComplexDouble beta
     ) throws Exception {
-        QReg newRegister = new QReg(1, new ComplexDouble[]{alpha, beta});
+        Vector vec = new Vector(new ComplexDouble[]{alpha, beta});
+        QReg newRegister = new QReg(1, vec);
         String registerID = Double.toString(
             new Date().getTime() + new Random().nextDouble());
         QubitInfo newQubit = new QubitInfo(registerID, 0);
@@ -103,16 +105,14 @@ public class QManager {
         }
 
         // Create new reg merged regs
-        ComplexDouble[][] newRegConfig = {{Complex.unit()}};
+        Matrix newRegConfig = Matrix.identity(1);
         ArrayList <QubitInfo> newRegQubits = new ArrayList<QubitInfo>();
         String newRegisterAddress = Double.toString(new Date().getTime());
 
         for (String regAddr : usedRegisterAddresses) {
             QRegInfo currRegInfo = regs.get(regAddr);
-            ComplexDouble[][] currRegInfoMat = currRegInfo.reg.getDensMat();
-            newRegConfig = ComplexMath.tensorMultiplication(
-                newRegConfig, newRegConfig.length, newRegConfig.length,
-                currRegInfoMat, currRegInfoMat.length, currRegInfoMat.length);
+            Matrix currRegInfoMat = currRegInfo.reg.getDensMat();
+            newRegConfig = newRegConfig.tensorTimes(currRegInfoMat);
             
             for (QubitInfo qubit : currRegInfo.qubits) {
                 newRegQubits.add(qubit);
@@ -136,10 +136,10 @@ public class QManager {
     // firstQubitAddressInRegister - минимальный индекс кубита в
     // регистре, к которому применяется преобразование
     protected void performTransitionForQubits (
-        QubitInfo         controlQubit,
-        ComplexDouble[][] transitionMatrix,
-        QRegInfo          mergedRegisterInfo,
-        QubitInfo ...     qubits
+        QubitInfo     controlQubit,
+        Matrix        transitionMatrix,
+        QRegInfo      mergedRegisterInfo,
+        QubitInfo ... qubits
     ) throws Exception {
         ArrayList<Integer> qubitIndexes = new ArrayList<Integer>();
         for (QubitInfo q : qubits) {

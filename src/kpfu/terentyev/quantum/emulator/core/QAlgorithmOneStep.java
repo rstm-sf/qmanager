@@ -5,8 +5,7 @@ import java.util.List;
 
 import kpfu.terentyev.quantum.emulator.core.gates.QuantumGate;
 import kpfu.terentyev.quantum.emulator.core.gates.UGate;
-import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.ComplexDouble;
+import kpfu.terentyev.quantum.util.Matrix;
 
 /**
  * Created by aleksandrterentev on 02.04.16.
@@ -23,10 +22,10 @@ public class QAlgorithmOneStep extends QAlgorithm {
     public static final int NotAnIndex = -1;
 
     public QAlgorithmOneStep(
-        int               qubitsInRegister,
-        int               controlQubitIndex,
-        List<Integer>     gateQubitIndexes,
-        ComplexDouble[][] transformationMatrix
+        int           qubitsInRegister,
+        int           controlQubitIndex,
+        List<Integer> gateQubitIndexes,
+        Matrix        transformationMatrix
     ) throws Exception {
         stepsNumber = 1;
         QSchemeStepQubitAttributes[][] algSheme = 
