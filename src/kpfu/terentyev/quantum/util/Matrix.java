@@ -37,6 +37,13 @@ final public class Matrix {
         this.data[i][j] = val;
     }
 
+    public ComplexDouble get(int i, int j) {
+        if (i >= M || i < 0 || j >= N || j < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        return this.data[i][j];
+    }
+
     public Matrix clone() {
         return new Matrix(this.data);
     }
