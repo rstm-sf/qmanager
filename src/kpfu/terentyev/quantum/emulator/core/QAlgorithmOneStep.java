@@ -27,27 +27,28 @@ public class QAlgorithmOneStep extends QAlgorithm {
         List<Integer> gateQubitIndexes,
         Matrix        transformationMatrix
     ) throws Exception {
-        stepsNumber = 1;
-        QSchemeStepQubitAttributes[][] algSheme = 
-            new QSchemeStepQubitAttributes[qubitsInRegister][1];
+        QSchemeStepQubitAttr[][] algSheme = 
+            new QSchemeStepQubitAttr[qubitsInRegister][1];
         String gateId = "Gate";
-        for (int i = 0; i < qubitsInRegister; i++) {
+        for (int i = 0; i < qubitsInRegister; i++)
             //if (gateQubitIndexes.contains(new Integer(i))){ //! deprecated
             if (gateQubitIndexes.contains(Integer.valueOf(i))) {
-                algSheme[i][0] = new QSchemeStepQubitAttributes(gateId, false);
+                algSheme[i][0] = new QSchemeStepQubitAttr(gateId, false);
             } else if (i == controlQubitIndex){
-                algSheme[i][0] = new QSchemeStepQubitAttributes(gateId, true);
+                algSheme[i][0] = new QSchemeStepQubitAttr(gateId, true);
             } else {
-                algSheme[i][0] = new QSchemeStepQubitAttributes();
+                algSheme[i][0] = new QSchemeStepQubitAttr();
             }
-        }
-        gates = new HashMap<String, QuantumGate>();
-        mainGateIDs = new String[]{gateId};
+
         QuantumGate gate = new UGate(
             gateQubitIndexes.size(), transformationMatrix);
-        gates.put(gateId, gate);
-        algorithmSchemeMatrix = algSheme;
-        qubitsNumber = qubitsInRegister;
-        size = (int) Math.pow(2, qubitsNumber);
+        
+        this.gates        = new HashMap<String, QuantumGate>();
+        this.gates.put(gateId, gate);
+        this.mainGateIDs  = new String[]{gateId};
+        this.algSchemeMat = algSheme;
+        this.nQubits      = qubitsInRegister;
+        this.nSteps       = 1;
+        this.size         = (int) Math.pow(2, nQubits);
     }
 }

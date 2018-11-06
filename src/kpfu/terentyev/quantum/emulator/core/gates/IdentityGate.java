@@ -9,7 +9,7 @@ import kpfu.terentyev.quantum.util.Matrix;
 public class IdentityGate extends QuantumGate {
 
     public IdentityGate() {
-        this.qubitsNumber = 1;
+        this.nQubits = 1;
         this.size = 2;
     }
 

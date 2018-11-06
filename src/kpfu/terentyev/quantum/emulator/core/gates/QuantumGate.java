@@ -8,7 +8,7 @@ import kpfu.terentyev.quantum.util.Matrix;
  */
 
 public abstract class QuantumGate {
-    protected int qubitsNumber;
+    protected int nQubits;
     protected int size;
 
     @Override

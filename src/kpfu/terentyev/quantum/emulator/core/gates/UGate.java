@@ -7,9 +7,9 @@ import kpfu.terentyev.quantum.util.Matrix;
  */
 public class UGate extends QuantumGate {
 
-    public UGate (int qubitsNumber, Matrix uMatrix) {
-        this.qubitsNumber = qubitsNumber;
-        this.size = (int) Math.pow(2, qubitsNumber);
+    public UGate (int nQubits, Matrix uMatrix) {
+        this.nQubits = nQubits;
+        this.size = (int) Math.pow(2, nQubits);
         this.matrix = uMatrix;
     }
 

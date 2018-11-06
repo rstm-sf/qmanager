@@ -3,7 +3,7 @@ package kpfu.terentyev.quantum.emulator.core;
 /**
  * Created by alexandrterentyev on 19.05.15.
  */
-public class QSchemeStepQubitAttributes {
+public class QSchemeStepQubitAttr {
     public String gateID;
 
     /*
@@ -12,12 +12,12 @@ public class QSchemeStepQubitAttributes {
     boolean control;
     public static String IdentityGateID = "IdentityGateID";
 
-    public QSchemeStepQubitAttributes(String gateID, boolean control) {
+    public QSchemeStepQubitAttr(String gateID, boolean control) {
         this.gateID = gateID;
         this.control = control;
     }
 
-    public QSchemeStepQubitAttributes () {
+    public QSchemeStepQubitAttr () {
         this.gateID = IdentityGateID;
         this.control =false;
     }
