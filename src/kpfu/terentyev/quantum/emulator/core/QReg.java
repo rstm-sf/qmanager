@@ -3,7 +3,6 @@ package kpfu.terentyev.quantum.emulator.core;
 import java.util.Random;
 
 import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.ComplexDouble;
 import kpfu.terentyev.quantum.util.Matrix;
 import kpfu.terentyev.quantum.util.Vector;
 
@@ -69,7 +68,7 @@ public class QReg {
 
         Matrix p0MatTr = p0Mat.dagger();
         Matrix p0MatTr_p0Mat_ro = p0MatTr.times(p0Mat).times(densMat);
-        double p0Norm = ComplexDouble.cuCreal(p0MatTr_p0Mat_ro.trace());        
+        double p0Norm = Complex.cReal(p0MatTr_p0Mat_ro.trace());        
 
         //measure and normalize
         Matrix pmMat;
@@ -90,7 +89,7 @@ public class QReg {
         Matrix pmMat_ro_pmMatTr = pmMat.times(densMat).times(pmMatTr);
         Matrix pmTr_pmMat_ro = pmMatTr.times(pmMat).times(densMat);
         densMat = pmMat_ro_pmMatTr.times(
-            Complex.complex(pmTr_pmMat_ro.trace().x, 0.0));
+            Complex.cmplx(pmTr_pmMat_ro.trace().x, 0.0));
         return result;
     }
 

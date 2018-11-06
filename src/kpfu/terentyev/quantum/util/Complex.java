@@ -1,23 +1,50 @@
 package kpfu.terentyev.quantum.util;
 
-/**
- * Created by aleksandrterentev on 14.04.17.
- */
 public class Complex {
+    public double x;
+    public double y;
 
-    public static ComplexDouble complex (double real, double imagine) {
-        return ComplexDouble.cuCmplx(real, imagine);
+    private Complex() {}
+
+    public static double cReal(Complex x) {
+        return x.x;
     }
 
-    public static ComplexDouble zero () {
-        return ComplexDouble.cuCmplx(0, 0);
+    public static double cImag(Complex x) {
+        return x.y;
     }
 
-    public static ComplexDouble unit (){
-        return ComplexDouble.cuCmplx(1, 0);
+    public static Complex cmplx(double r, double i) {
+        Complex res = new Complex();
+        res.x = r;
+        res.y = i;
+        return res;
     }
 
-    public static ComplexDouble [] getRow(ComplexDouble[][] matr, int row) {
-        return matr [row];
+    public static Complex conj(Complex x) {
+        return cmplx(cReal(x), -cImag(x));
+    }
+
+    public static Complex cAdd(Complex x, Complex y) {
+        return cmplx(cReal(x) + cReal(y), cImag(x) + cImag(y));
+    }
+
+    public static Complex cMul(Complex x, Complex y) {
+        Complex prod = cmplx(
+            cReal(x) * cReal(y) - cImag(x) * cImag(y),
+            cReal(x) * cImag(y) + cImag(x) * cReal(y));
+        return prod;
+    }
+
+    public String toString() {
+        return "(" + this.x + "," + this.y + ")";
+    }
+
+    public static Complex zero() {
+        return Complex.cmplx(0, 0);
+    }
+
+    public static Complex unit() {
+        return Complex.cmplx(1, 0);
     }
 }

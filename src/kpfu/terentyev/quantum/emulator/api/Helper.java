@@ -1,7 +1,6 @@
 package kpfu.terentyev.quantum.emulator.api;
 
 import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.ComplexDouble;
 import kpfu.terentyev.quantum.util.Matrix;
 
 public class Helper extends QManager {
@@ -43,20 +42,20 @@ public class Helper extends QManager {
     }
 
     private static Matrix generateMatQET(double theta) {
-        return new Matrix(new ComplexDouble[][] {
+        return new Matrix(new Complex[][] {
             {
                 Complex.unit(), Complex.zero(), Complex.zero(), Complex.zero()
             },
             {
                 Complex.zero(),
-                Complex.complex(Math.cos(theta / 2.0), 0.0),
-                Complex.complex(0.0, Math.sin(theta / 2.0)),
+                Complex.cmplx(Math.cos(theta / 2.0), 0.0),
+                Complex.cmplx(0.0, Math.sin(theta / 2.0)),
                 Complex.zero()
             },
             {
                 Complex.zero(),
-                Complex.complex(0.0, Math.sin(theta / 2.0)),
-                Complex.complex(Math.cos(theta / 2.0), 0.0),
+                Complex.cmplx(0.0, Math.sin(theta / 2.0)),
+                Complex.cmplx(Math.cos(theta / 2.0), 0.0),
                 Complex.zero()
             },
             {
@@ -66,20 +65,20 @@ public class Helper extends QManager {
     }
 
     private static Matrix generateMatPHASE(double theta) {
-        return new Matrix(new ComplexDouble[][] {
+        return new Matrix(new Complex[][] {
             {
                 Complex.unit(), Complex.zero(), Complex.zero(), Complex.zero()
             },
             {
                 Complex.zero(),
-                Complex.complex(Math.cos(-theta / 2.0), Math.sin(-theta / 2.0)),
+                Complex.cmplx(Math.cos(-theta / 2.0), Math.sin(-theta / 2.0)),
                 Complex.zero(),
                 Complex.zero()
             },
             {
                 Complex.zero(),
                 Complex.zero(),
-                Complex.complex(Math.cos(theta / 2.0), Math.sin(theta / 2.0)),
+                Complex.cmplx(Math.cos(theta / 2.0), Math.sin(theta / 2.0)),
                 Complex.zero()
             },
             {
@@ -90,13 +89,13 @@ public class Helper extends QManager {
 
     private static Matrix generateMatCQET(
         double theta, boolean isFirstC, boolean isLastC) {
-        final ComplexDouble z  = Complex.zero();
-        final ComplexDouble u  = Complex.unit();
-        final ComplexDouble co = Complex.complex(Math.cos(theta / 2.0), 0.0);
-        final ComplexDouble si = Complex.complex(0.0, Math.sin(theta / 2.0));
+        final Complex z  = Complex.zero();
+        final Complex u  = Complex.unit();
+        final Complex co = Complex.cmplx(Math.cos(theta / 2.0), 0.0);
+        final Complex si = Complex.cmplx(0.0, Math.sin(theta / 2.0));
 
         if (isFirstC) {
-            return new Matrix(new ComplexDouble[][] {
+            return new Matrix(new Complex[][] {
                 {u,  z,  z, z, z, z, z, z},
                 {z, co, si, z, z, z, z, z},
                 {z, si, co, z, z, z ,z, z},
@@ -107,7 +106,7 @@ public class Helper extends QManager {
                 {z,  z,  z, z, z, z, z, u}
             });
         } else if (isLastC) {
-            return new Matrix(new ComplexDouble[][] {
+            return new Matrix(new Complex[][] {
                 {u, z,  z, z,  z, z, z, z},
                 {z, u,  z, z,  z, z, z, z},
                 {z, z, co, z, si, z, z, z},
@@ -118,7 +117,7 @@ public class Helper extends QManager {
                 {z, z,  z, z,  z, z, z, u}
             });
         } else {
-            return new Matrix(new ComplexDouble[][] {
+            return new Matrix(new Complex[][] {
                 {u,  z, z, z,  z, z, z, z},
                 {z, co, z, z, si, z, z, z},
                 {z,  z, u, z,  z, z, z, z},

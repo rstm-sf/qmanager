@@ -5,7 +5,6 @@ import java.util.Map;
 
 import kpfu.terentyev.quantum.emulator.core.gates.QuantumGate;
 import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.ComplexDouble;
 import kpfu.terentyev.quantum.util.Matrix;
 
 /**

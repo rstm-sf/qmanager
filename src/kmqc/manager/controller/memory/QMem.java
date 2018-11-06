@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kpfu.terentyev.quantum.emulator.api.Helper;
-import kpfu.terentyev.quantum.util.ComplexDouble;
+import kpfu.terentyev.quantum.util.Complex;
 
 /**
 * Класс, реализующий работу квантовой памяти.
@@ -66,7 +66,7 @@ public class QMem {
     * @param beta    Амплитуда вероятности состояния &#124;1&gt;.
     */
     public void initState(
-        int idxCell, ComplexDouble alpha, ComplexDouble beta) throws Exception {
+        int idxCell, Complex alpha, Complex beta) throws Exception {
         Helper.QubitInfo qubitInfo = helper.initNewQubit(alpha, beta);
         memory.get(idxCell).setState(qubitInfo);
     }

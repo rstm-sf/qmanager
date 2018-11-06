@@ -7,7 +7,7 @@ import kmqc.manager.controller.qpu.Placing;
 import kmqc.manager.controller.qpu.ProcessingUnit;
 
 import kpfu.terentyev.quantum.emulator.api.Helper;
-import kpfu.terentyev.quantum.util.ComplexDouble;
+import kpfu.terentyev.quantum.util.Complex;
 
 /**
 * Класс, реализующий работу контроллера.
@@ -49,7 +49,7 @@ public class QController {
     * @param beta    Вероятность состояния &#124;1&gt;.
     */
     public void init(
-        int idxQMem, ComplexDouble alpha, ComplexDouble beta) throws Exception {
+        int idxQMem, Complex alpha, Complex beta) throws Exception {
         qmem.initState(idxQMem, alpha, beta);
     }
 

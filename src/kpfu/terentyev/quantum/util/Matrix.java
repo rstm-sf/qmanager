@@ -5,16 +5,16 @@ final public class Matrix {
     public Matrix(int M, int N) {
         this.M = M;
         this.N = N;
-        data = new ComplexDouble[M][N];
+        data = new Complex[M][N];
         for (int i = 0; i < M; i++)
             for (int j = 0; j < N; j++)
                 data[i][j] = Complex.zero();
     }
 
-    public Matrix(ComplexDouble[][] data) {
+    public Matrix(Complex[][] data) {
         M = data.length;
         N = data[0].length;
-        this.data = new ComplexDouble[M][N];
+        this.data = new Complex[M][N];
         for (int i = 0; i < M; i++)
             for (int j = 0; j < N; j++)
                 this.data[i][j] = data[i][j];
@@ -30,14 +30,14 @@ final public class Matrix {
         return N;
     }
 
-    public void set(int i, int j, ComplexDouble val) {
+    public void set(int i, int j, Complex val) {
         if (i >= M || i < 0 || j >= N || j < 0) {
             throw new IndexOutOfBoundsException();
         }
         this.data[i][j] = val;
     }
 
-    public ComplexDouble get(int i, int j) {
+    public Complex get(int i, int j) {
         if (i >= M || i < 0 || j >= N || j < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -56,7 +56,7 @@ final public class Matrix {
     }
 
     private void swap(int i, int j) {
-        ComplexDouble[] temp = data[i];
+        Complex[] temp = data[i];
         data[i] = data[j];
         data[j] = temp;
     }
@@ -73,17 +73,17 @@ final public class Matrix {
         Matrix A = new Matrix(N, M);
         for (int i = 0; i < M; i++)
             for (int j = 0; j < N; j++)
-                A.data[j][i] = ComplexDouble.cuConj(this.data[i][j]);
+                A.data[j][i] = Complex.conj(this.data[i][j]);
         return A;
     }
 
-    public ComplexDouble trace() {
+    public Complex trace() {
         Matrix A = this;
         if (A.N != A.M)
             throw new RuntimeException("Matrix is not square.");
-        ComplexDouble result = Complex.zero();
+        Complex result = Complex.zero();
         for (int i = 0; i < M; i++)
-            result = ComplexDouble.cuCadd(result, A.data[i][i]);
+            result = Complex.cAdd(result, A.data[i][i]);
         return result;
     }
 
@@ -95,18 +95,18 @@ final public class Matrix {
         for (int i = 0; i < C.M; i++)
             for (int j = 0; j < C.N; j++)
                 for (int k = 0; k < A.N; k++)
-                    C.data[i][j] = ComplexDouble.cuCadd(
+                    C.data[i][j] = Complex.cAdd(
                         C.data[i][j],
-                        ComplexDouble.cuCmul(A.data[i][k], B.data[k][j]));
+                        Complex.cMul(A.data[i][k], B.data[k][j]));
         return C;
     }
 
-    public Matrix times(ComplexDouble a) {
+    public Matrix times(Complex a) {
         Matrix A = this;
         Matrix B = new Matrix(A.M, A.N);
         for (int i = 0; i < B.M; i++)
             for (int j = 0; j < B.N; j++)
-                B.data[i][j] = ComplexDouble.cuCmul(a, A.data[i][j]);
+                B.data[i][j] = Complex.cMul(a, A.data[i][j]);
         return B;
     }
 
@@ -128,7 +128,7 @@ final public class Matrix {
                 for (int i2 = 0; i2 < B.M; i2++)
                     for (int j2 = 0; j2 < B.N; j2++)
                         C.data[i1 * B.M + i2][j1 * B.N + j2] =
-                            ComplexDouble.cuCmul(A.data[i1][j1], B.data[i2][j2]);
+                            Complex.cMul(A.data[i1][j1], B.data[i2][j2]);
         return C;
     }
 
@@ -145,5 +145,5 @@ final public class Matrix {
 
     private final int M;
     private final int N;
-    private ComplexDouble data[][];
+    private Complex data[][];
 }

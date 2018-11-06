@@ -7,7 +7,6 @@ import java.util.Random;
 
 import kpfu.terentyev.quantum.emulator.core.*;
 import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.ComplexDouble;
 import kpfu.terentyev.quantum.util.Matrix;
 import kpfu.terentyev.quantum.util.Vector;
 
@@ -70,9 +69,9 @@ public class QManager {
     }
 
     public QubitInfo initNewQubit(
-        ComplexDouble alpha, ComplexDouble beta
+        Complex alpha, Complex beta
     ) throws Exception {
-        Vector vec = new Vector(new ComplexDouble[]{alpha, beta});
+        Vector vec = new Vector(new Complex[]{alpha, beta});
         QReg newRegister = new QReg(1, vec);
         String registerID = Double.toString(
             new Date().getTime() + new Random().nextDouble());

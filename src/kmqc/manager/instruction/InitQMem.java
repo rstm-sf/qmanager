@@ -1,6 +1,6 @@
 package kmqc.manager.instruction;
 
-import kpfu.terentyev.quantum.util.ComplexDouble;
+import kpfu.terentyev.quantum.util.Complex;
 
 /**
 * Наследник класса QInstruction.
@@ -18,7 +18,7 @@ public class InitQMem extends QInstruction {
     * @param alpha Амплитуда вероятности состояния &#124;0&gt;.
     * @param beta  Амплитуда вероятности состояния &#124;1&gt;.
     */
-    public InitQMem(int idx, ComplexDouble alpha, ComplexDouble beta) {
+    public InitQMem(int idx, Complex alpha, Complex beta) {
         this.idx = idx;
         this.alpha = alpha;
         this.beta = beta;
@@ -39,8 +39,8 @@ public class InitQMem extends QInstruction {
     private int idx;
 
     /** Амплитуда вероятности состояния &#124;0&gt */
-    private ComplexDouble alpha;
+    private Complex alpha;
 
     /** Амплитуда вероятности состояния &#124;1&gt */
-    private ComplexDouble beta;
+    private Complex beta;
 }

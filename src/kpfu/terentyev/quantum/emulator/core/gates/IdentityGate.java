@@ -1,7 +1,6 @@
 package kpfu.terentyev.quantum.emulator.core.gates;
 
 import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.ComplexDouble;
 import kpfu.terentyev.quantum.util.Matrix;
 
 /**
@@ -16,7 +15,7 @@ public class IdentityGate extends QuantumGate {
 
     @Override
     public Matrix getMatrix() {
-        return new Matrix(new ComplexDouble[][] {
+        return new Matrix(new Complex[][] {
                 {Complex.unit(), Complex.zero()},
                 {Complex.zero(), Complex.unit()}
         });

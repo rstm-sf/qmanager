@@ -9,7 +9,6 @@ import kmqc.manager.controller.QController;
 import kmqc.manager.instruction.*;
 
 import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.ComplexDouble;
 
 /**
 * Главный класс для проверки наработок.
