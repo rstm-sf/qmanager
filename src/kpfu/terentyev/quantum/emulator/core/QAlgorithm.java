@@ -63,76 +63,66 @@ public class QAlgorithm extends QuantumGate {
 
     private Matrix fun_if(
         int step, List<Number> mainGateQubits) throws Exception {
-        
+
+        //Move control qubit to top if need
+        int idxControlQubit = -1;
+        for (int i = 0; i < mainGateQubits.size(); i++) {
+            int idxQubit = mainGateQubits.get(i).intValue();
+            if (this.algSchemeMat[idxQubit][step].control)
+                idxControlQubit = idxQubit;
+        }
+
+        Matrix identityMat = identityGateMatrix();
+        Matrix swapGateMat = swapGateMatrix();
+        Matrix swapMat     = null;
+        if (idxControlQubit != -1) {
+            int idxHigherQubit = mainGateQubits.get(0).intValue();
+
+            for ( ; idxControlQubit > idxHigherQubit; idxControlQubit--) {
+                Matrix currSwap = Matrix.identity(1);
+                for (int i = 0; i < nQubits; )
+                    if (i < nQubits-1 && i+1 == idxControlQubit) {
+                        currSwap = currSwap.tensorTimes(swapGateMat);
+                        idxControlQubit = i;
+                        i += 2;
+                    } else {
+                        currSwap = currSwap.tensorTimes(identityMat);
+                        i++;
+                    }
+
+                if(swapMat == null) {
+                    swapMat = currSwap.clone();
+                } else {
+                    swapMat = swapMat.times(currSwap);
+                }
+            }
+        }
+
+        String mainGateID     = this.mainGateIDs[step];
+        String identityGateID = QSchemeStepQubitAttr.IdentityGateID;
+        Matrix mainGateMat    = this.gates.get(mainGateID).getMatrix();
         // central matrix
         Matrix cMat = Matrix.identity(1);
-        String mainGateID = this.mainGateIDs[step];
-        Matrix gateMatrix = this.gates.get(mainGateID).getMatrix();
         // if qubits is near to each other just multiply identity gates
         // and mainGate matrices (tensors)
-        for (int currQubit = 0; currQubit < nQubits; ) {
-            QSchemeStepQubitAttr qubitParams =
-                this.algSchemeMat[currQubit][step];
-            if (qubitParams.gateID.equals(mainGateID)){
-                currQubit += mainGateQubits.size();
-                cMat = cMat.tensorTimes(gateMatrix);
-            } else if (qubitParams.gateID.equals(
-                QSchemeStepQubitAttr.IdentityGateID)
-            ) {
-                Matrix gateMatrx = identityGateMatrix();
-                cMat = cMat.tensorTimes(gateMatrx);
-                currQubit++;
+        for (int q = 0; q < nQubits; ) {
+            QSchemeStepQubitAttr qubitParams = this.algSchemeMat[q][step];
+            if (qubitParams.gateID.equals(mainGateID)) {
+                cMat = cMat.tensorTimes(mainGateMat);
+                q   += mainGateQubits.size();
+            } else if (qubitParams.gateID.equals(identityGateID)) {
+                cMat = cMat.tensorTimes(identityMat);
+                q++;
             } else {
                 throw new Exception("Two non trivial gates at step!");
             }
         }
 
-        //Move control qubit to top if need
-        int controlQubitIndex = -1;
-        for (int i = 0; i < mainGateQubits.size(); i++) {
-            int qubitIndex = mainGateQubits.get(i).intValue();
-            if (this.algSchemeMat[qubitIndex][step].control)
-                controlQubitIndex = qubitIndex;
-        }
-
-        Matrix result = Matrix.identity(1);
-        List<Matrix> swapMat = new ArrayList<>();
-        if (controlQubitIndex != -1) {
-            Matrix swapGateMatrix = swapGateMatrix();
-            Matrix identityMatrx = identityGateMatrix();
-            int higherQubitIndex = mainGateQubits.get(0).intValue();
-
-            for ( ;
-                controlQubitIndex > higherQubitIndex;
-                controlQubitIndex--) {
-                Matrix currSwap = Matrix.identity(1);
-                for (int i = 0; i < nQubits; ) {
-                    if (i < nQubits-1 && i+1 == controlQubitIndex) {
-                        currSwap = currSwap.tensorTimes(swapGateMatrix);
-                        controlQubitIndex = i;
-                        i += 2;
-                    } else {
-                        currSwap = currSwap.tensorTimes(identityMatrx);
-                        i++;
-                    }
-                }
-                swapMat.add(currSwap);
-            }
-
-            if (swapMat.size() > 0) {
-                result = swapMat.get(0).clone();
-                for (int i = 1 ; i < swapMat.size(); i++)
-                    result = result.times(swapMat.get(i));
-
-                Matrix resultDagger = result.dagger();
-                result = result.times(cMat).times(resultDagger);
-            } else {
-                result = cMat;
-            }
+        if (swapMat == null) {
+            return cMat;
         } else {
-            result = cMat;
+            return swapMat.times(cMat).times(swapMat.dagger());
         }
-        return result;
     }
 
     private Matrix fun_else(
@@ -216,20 +206,20 @@ public class QAlgorithm extends QuantumGate {
         }
 
         //Move control qubit to top if need
-        int controlQubitIndex = -1;
+        int idxControlQubit = -1;
         for (int i = 0; i < mainGateQubits.size(); i++)
             if (algSchemeMat[mainGateQubits.get(i).intValue()][step].control)
-                controlQubitIndex = i;
+                idxControlQubit = i;
 
-        if (controlQubitIndex != -1) {
+        if (idxControlQubit != -1) {
             //project to current positions
-            controlQubitIndex = currUpQubitIdx + controlQubitIndex;
-            for ( ; controlQubitIndex > currUpQubitIdx; controlQubitIndex--) {
+            idxControlQubit = currUpQubitIdx + idxControlQubit;
+            for ( ; idxControlQubit > currUpQubitIdx; idxControlQubit--) {
                 Matrix currSwap = Matrix.identity(1);
                 for (int i=0; i < this.nQubits; )
-                    if (i < this.nQubits-1 && i+1 == controlQubitIndex) {
+                    if (i < this.nQubits-1 && i+1 == idxControlQubit) {
                         currSwap = currSwap.tensorTimes(swapGateMatrix);
-                        controlQubitIndex = i;
+                        idxControlQubit = i;
                         i += 2;
                     } else {
                         currSwap = currSwap.tensorTimes(identityMatrx);
