@@ -72,9 +72,9 @@ public class QAlgorithm extends QuantumGate {
                 idxControlQubit = idxQubit;
         }
 
-        Matrix identityMat = identityGateMatrix();
-        Matrix swapGateMat = swapGateMatrix();
-        Matrix swapMat     = null;
+        Matrix identityGateMat = identityGateMatrix();
+        Matrix swapGateMat     = swapGateMatrix();
+        Matrix swapMat         = null;
         if (idxControlQubit != -1) {
             int idxHigherQubit = mainGateQubits.get(0).intValue();
 
@@ -86,7 +86,7 @@ public class QAlgorithm extends QuantumGate {
                         idxControlQubit = i;
                         i += 2;
                     } else {
-                        currSwap = currSwap.tensorTimes(identityMat);
+                        currSwap = currSwap.tensorTimes(identityGateMat);
                         i++;
                     }
 
@@ -111,7 +111,7 @@ public class QAlgorithm extends QuantumGate {
                 cMat = cMat.tensorTimes(mainGateMat);
                 q   += mainGateQubits.size();
             } else if (qubitParams.gateID.equals(identityGateID)) {
-                cMat = cMat.tensorTimes(identityMat);
+                cMat = cMat.tensorTimes(identityGateMat);
                 q++;
             } else {
                 throw new Exception("Two non trivial gates at step!");
@@ -134,45 +134,44 @@ public class QAlgorithm extends QuantumGate {
         for (Number idx : mainGateQubits)
             currQubitsPositions[idx.intValue()] = true;
 
-        int currUpQubitIdx = mainGateQubits.get(0).intValue();
+        int idxUpperQubit = mainGateQubits.get(0).intValue();
         //matrix perfomed main gate when all qubits are near
-        Matrix swapMat = null;
-        Matrix swapGateMatrix = swapGateMatrix();
-        Matrix identityMatrx = identityGateMatrix();
-        int nLevel = mainGateQubits.size() / 2 + mainGateQubits.size() % 2;
-        for (int level = 0; level <= nLevel; level++) {
+        int nLevels = mainGateQubits.size() / 2 + mainGateQubits.size() % 2;
+        Matrix swapGateMat     = swapGateMatrix();
+        Matrix identityGateMat = identityGateMatrix();
+        Matrix swapMat         = null;
+        for (int level = 0; level <= nLevels; level++) {
             //find upper and lower qubits. Upper index is less than lower index
             int upperQubit = -1; //empty
             int lowerQubit = -1; //empty
             int upperPlace = gravityCenter - level;
             int lowerPlace = gravityCenter + level;
-            int upperIndex = upperPlace;
-            int lowerIndex = lowerPlace;
+            int idxUpper   = upperPlace;
+            int idxLower   = lowerPlace;
 
-            for (; upperIndex >= 0; upperIndex--)
-                if (upperQubit==-1 && currQubitsPositions[upperIndex]) {
-                    upperQubit = upperIndex;
-                    currQubitsPositions[upperIndex]            = false;
+            for (; idxUpper >= 0; idxUpper--)
+                if (upperQubit == -1 && currQubitsPositions[idxUpper]) {
+                    upperQubit = idxUpper;
+                    currQubitsPositions[idxUpper]              = false;
                     currQubitsPositions[gravityCenter - level] = true;
                     break;
                 }
 
             if (level > 0)
-                for ( ; lowerIndex < nQubits; lowerIndex++) {
-                    if (lowerQubit == -1 && currQubitsPositions[lowerIndex]) {
-                        lowerQubit = lowerIndex;
-                        currQubitsPositions[lowerIndex]            = false;
+                for ( ; idxLower < nQubits; idxLower++)
+                    if (lowerQubit == -1 && currQubitsPositions[idxLower]) {
+                        lowerQubit = idxLower;
+                        currQubitsPositions[idxLower]              = false;
                         currQubitsPositions[gravityCenter + level] = true;
                         break;
                     }
-                }
 
             int distance = Math.max(
                 upperPlace - upperQubit, lowerQubit - lowerPlace);
             //move qubits to gravity center + level
             for ( ; distance > 0; distance--) {
                 //form swap matrix
-                Matrix currentDistanceSwap = Matrix.identity(1);
+                Matrix distSwap = Matrix.identity(1);
                 for (int i = 0; i < this.nQubits; )
                     if (
                         i == upperQubit   && upperQubit == upperPlace - distance
@@ -185,24 +184,22 @@ public class QAlgorithm extends QuantumGate {
                         if (i == lowerQubit - 1)
                             lowerQubit--;
 
-                        currentDistanceSwap = currentDistanceSwap.tensorTimes(
-                            swapGateMatrix);
+                        distSwap = distSwap.tensorTimes(swapGateMat);
                         i += 2;
                     } else {
-                        currentDistanceSwap = currentDistanceSwap.tensorTimes(
-                            identityMatrx);
+                        distSwap = distSwap.tensorTimes(identityGateMat);
                         i++;
                     }
 
                 if (swapMat == null) {
-                    swapMat = currentDistanceSwap.clone();
+                    swapMat = distSwap.clone();
                 } else {
-                    swapMat = currentDistanceSwap.times(swapMat);
+                    swapMat = distSwap.times(swapMat);
                 }
             }
 
             if (upperQubit != -1)
-                currUpQubitIdx = upperPlace;
+                idxUpperQubit = upperPlace;
         }
 
         //Move control qubit to top if need
@@ -213,16 +210,16 @@ public class QAlgorithm extends QuantumGate {
 
         if (idxControlQubit != -1) {
             //project to current positions
-            idxControlQubit = currUpQubitIdx + idxControlQubit;
-            for ( ; idxControlQubit > currUpQubitIdx; idxControlQubit--) {
+            idxControlQubit += idxUpperQubit;
+            for ( ; idxControlQubit > idxUpperQubit; idxControlQubit--) {
                 Matrix currSwap = Matrix.identity(1);
                 for (int i=0; i < this.nQubits; )
                     if (i < this.nQubits-1 && i+1 == idxControlQubit) {
-                        currSwap = currSwap.tensorTimes(swapGateMatrix);
+                        currSwap = currSwap.tensorTimes(swapGateMat);
                         idxControlQubit = i;
                         i += 2;
                     } else {
-                        currSwap = currSwap.tensorTimes(identityMatrx);
+                        currSwap = currSwap.tensorTimes(identityGateMat);
                         i++;
                     }
 
@@ -232,30 +229,29 @@ public class QAlgorithm extends QuantumGate {
 
         // central matrix
         Matrix cMat = Matrix.identity(1);
-        String mainGateID = this.mainGateIDs[step];
-        Matrix gateMatrix = this.gates.get(mainGateID).getMatrix();
+        String mainGateID  = this.mainGateIDs[step];
+        Matrix mainGateMat = this.gates.get(mainGateID).getMatrix();
         //form central matrix after swaps
         for (int i = 0; i < nQubits; )
-            if (i == gravityCenter - nLevel / 2) {
-                cMat = cMat.tensorTimes(gateMatrix);
+            if (i == gravityCenter - nLevels / 2) {
+                cMat = cMat.tensorTimes(mainGateMat);
                 i   += mainGateQubits.size();
             } else {
-                cMat = cMat.tensorTimes(identityMatrx);
+                cMat = cMat.tensorTimes(identityGateMat);
                 i++;
             }
 
-        Matrix swapMatDagger = swapMat.dagger();
-        return swapMatDagger.times(cMat).times(swapMat);
+        return swapMat.dagger().times(cMat).times(swapMat);
     }
 
     private boolean checkAdjustment (List<Number> listToCheck) {
-        for (int i = 1; i < listToCheck.size(); i++)
-            if (
-                listToCheck.get(i).intValue() >
-                listToCheck.get(i-1).intValue() + 1
-            ) {
+        int prev = listToCheck.get(0).intValue();
+        for (int i = 1; i < listToCheck.size(); i++) {
+            int current = listToCheck.get(i).intValue();
+            if (current > prev + 1)
                 return false;
-            }
+            prev = current;
+        }
         return true;
     }
 
