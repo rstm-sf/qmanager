@@ -15,9 +15,8 @@ public class QReg {
         this.nQubits = nQubits;
         size = ((int) Math.pow(2, nQubits));
         this.densMat = densMat;
-        if (size != densMat.getM()) {
+        if (size != densMat.getM())
             throw new Exception();
-        }
     }
 
     public QReg (int nQubits, Vector configuration) throws Exception {
@@ -46,50 +45,46 @@ public class QReg {
         return densMat.toString();
     }
 
-    public void performAlgorythm (QAlgorithm algorythm) throws Exception {
+    public void performAlgorythm (QAlgo algorythm) throws Exception {
         Matrix uMat = algorythm.getMatrix();
-        Matrix uMat_transpose = uMat.dagger();
-        densMat = uMat.times(densMat).times(uMat_transpose);
+        densMat = uMat.times(densMat).times(uMat.dagger());
     }        
 
     // Измерение
     public int measureQubit (int idxQubit) throws Exception {
-        if (idxQubit >= nQubits){
+        if (idxQubit >= nQubits)
             throw new Exception();
-        }
 
-        Matrix p0Mat = new Matrix(size, size);
-        int pow2n_q = (int) Math.pow(2, nQubits - idxQubit);
+        Matrix p0     = new Matrix(size, size);
+        int pow2n_q   = (int) Math.pow(2, nQubits - idxQubit);
         int pow2n_q_1 = (int) Math.pow(2, nQubits - idxQubit - 1);
         // нужно пройти по всем состояниям, где текущий кубит 0
         for (int i = 0; i < size; i += pow2n_q)
             for (int j = i; j < i + pow2n_q_1; j++)
-                p0Mat.set(j, j, Complex.unit());
+                p0.set(j, j, Complex.unit());
 
-        Matrix p0MatTr = p0Mat.dagger();
-        Matrix p0MatTr_p0Mat_ro = p0MatTr.times(p0Mat).times(densMat);
-        double p0Norm = Complex.cReal(p0MatTr_p0Mat_ro.trace());        
+        Matrix p0Dp0_ro = p0.dagger().times(p0).times(densMat);
+        double p0Norm   = Complex.cReal(p0Dp0_ro.trace());        
 
-        //measure and normalize
-        Matrix pmMat;
+        // measure and normalize
+        Matrix pm;
         int result;
         if (new Random().nextDouble() > p0Norm) {
             result = 1;
             // Configure P1 projector
-            pmMat = new Matrix(size, size);
+            pm = new Matrix(size, size);
             for (int i = pow2n_q_1; i < size; i += pow2n_q)
                 for (int j = i; j < i+pow2n_q_1; j++)
-                    pmMat.set(j, j, Complex.unit());
+                    pm.set(j, j, Complex.unit());
         } else {
             result = 0;
-            pmMat = p0Mat;
+            pm = p0;
         }
 
-        Matrix pmMatTr = pmMat.dagger();
-        Matrix pmMat_ro_pmMatTr = pmMat.times(densMat).times(pmMatTr);
-        Matrix pmTr_pmMat_ro = pmMatTr.times(pmMat).times(densMat);
-        densMat = pmMat_ro_pmMatTr.times(
-            Complex.cmplx(pmTr_pmMat_ro.trace().x, 0.0));
+        Matrix pmDagger       = pm.dagger();
+        Matrix pm_ro_pmDagger = pm.times(densMat).times(pmDagger);
+        Matrix pmDpm_ro       = pmDagger.times(pm).times(densMat);
+        densMat = pm_ro_pmDagger.times(Complex.cmplx(pmDpm_ro.trace().x, 0.0));
         return result;
     }
 

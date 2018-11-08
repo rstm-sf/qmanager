@@ -16,22 +16,22 @@ import kpfu.terentyev.quantum.util.Matrix;
 // (Map) gates :{gateID:specifications (Quantum gate)}.
 // Generally quantum step and algorithm are quantum gates too.
 
-public class QAlgorithm extends QuantumGate {
+public class QAlgo extends QuantumGate {
 
-    public QAlgorithm() {
+    public QAlgo() {
         this.nSteps = 0;
     }
 
-    public QAlgorithm(
-        QSchemeStepQubitAttr[][] algSchemeMat,
+    public QAlgo(
+        QSchemeStepQubitAttr[][] algoSchemeMat,
         String[]                 mainGateIDs,
         Map<String, QuantumGate> gates) {
-        this.algSchemeMat = algSchemeMat;
-        this.gates        = gates;
-        this.mainGateIDs  = mainGateIDs;
-        this.nQubits      = algSchemeMat.length;
-        this.nSteps       = algSchemeMat[0].length;
-        this.size         = (int) Math.pow(2, nQubits);
+        this.algoSchemeMat = algoSchemeMat;
+        this.gates         = gates;
+        this.mainGateIDs   = mainGateIDs;
+        this.nQubits       = algoSchemeMat.length;
+        this.nSteps        = algoSchemeMat[0].length;
+        this.size          = (int) Math.pow(2, nQubits);
     }
 
     Matrix generateStepMatrix(int step) throws Exception {
@@ -41,7 +41,7 @@ public class QAlgorithm extends QuantumGate {
         List<Number> mainGateQubits = new ArrayList<>();
 
         for (int q = 0; q < this.nQubits; q++) {
-            QSchemeStepQubitAttr qubitParams = this.algSchemeMat[q][step];
+            QSchemeStepQubitAttr qubitParams = this.algoSchemeMat[q][step];
             if (qubitParams.gateID.equals(mainGateID)) {
                 mainGateIndexesSum += q;
                 count++;
@@ -68,7 +68,7 @@ public class QAlgorithm extends QuantumGate {
         int idxControlQubit = -1;
         for (int i = 0; i < mainGateQubits.size(); i++) {
             int idxQubit = mainGateQubits.get(i).intValue();
-            if (this.algSchemeMat[idxQubit][step].control)
+            if (this.algoSchemeMat[idxQubit][step].control)
                 idxControlQubit = idxQubit;
         }
 
@@ -106,7 +106,7 @@ public class QAlgorithm extends QuantumGate {
         // if qubits is near to each other just multiply identity gates
         // and mainGate matrices (tensors)
         for (int q = 0; q < nQubits; ) {
-            QSchemeStepQubitAttr qubitParams = this.algSchemeMat[q][step];
+            QSchemeStepQubitAttr qubitParams = this.algoSchemeMat[q][step];
             if (qubitParams.gateID.equals(mainGateID)) {
                 cMat = cMat.tensorTimes(mainGateMat);
                 q   += mainGateQubits.size();
@@ -205,7 +205,7 @@ public class QAlgorithm extends QuantumGate {
         //Move control qubit to top if need
         int idxControlQubit = -1;
         for (int i = 0; i < mainGateQubits.size(); i++)
-            if (algSchemeMat[mainGateQubits.get(i).intValue()][step].control)
+            if (algoSchemeMat[mainGateQubits.get(i).intValue()][step].control)
                 idxControlQubit = i;
 
         if (idxControlQubit != -1) {
@@ -264,7 +264,7 @@ public class QAlgorithm extends QuantumGate {
     }
 
     protected int nSteps;
-    protected QSchemeStepQubitAttr[][] algSchemeMat;
+    protected QSchemeStepQubitAttr[][] algoSchemeMat;
     protected String[] mainGateIDs;
     protected Map <String, QuantumGate> gates;
 }

@@ -10,7 +10,7 @@ import kpfu.terentyev.quantum.util.Complex;
 import kpfu.terentyev.quantum.util.Matrix;
 import kpfu.terentyev.quantum.util.Vector;
 
-import static kpfu.terentyev.quantum.emulator.core.QAlgorithmOneStep.NotAnIndex;
+import static kpfu.terentyev.quantum.emulator.core.QAlgOneStep.NotAnIndex;
 
 /**
  * Created by aleksandrterentev on 24.01.16.
@@ -150,7 +150,7 @@ public class QManager {
             controlQubitIndex = controlQubit.idxInReg;
         }
 
-        mergedRegisterInfo.reg.performAlgorythm(new QAlgorithmOneStep(
+        mergedRegisterInfo.reg.performAlgorythm(new QAlgOneStep(
             mergedRegisterInfo.qubits.size(),
             controlQubitIndex,
             qubitIndexes,
