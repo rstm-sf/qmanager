@@ -1,4 +1,4 @@
-package kpfu.terentyev.quantum.emulator.api;
+package kpfu.terentyev.quantum.simulator.api;
 
 import kpfu.terentyev.quantum.util.Complex;
 import kpfu.terentyev.quantum.util.Matrix;

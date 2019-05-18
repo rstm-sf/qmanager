@@ -6,7 +6,7 @@ import kmqc.manager.controller.qpu.AddrDevice;
 import kmqc.manager.controller.qpu.Placing;
 import kmqc.manager.controller.qpu.ProcessingUnit;
 
-import kpfu.terentyev.quantum.emulator.api.Helper;
+import kpfu.terentyev.quantum.simulator.api.Helper;
 import kpfu.terentyev.quantum.util.Complex;
 
 /**

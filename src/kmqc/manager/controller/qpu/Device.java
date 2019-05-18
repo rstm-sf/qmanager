@@ -1,6 +1,6 @@
 package kmqc.manager.controller.qpu;
 
-import kpfu.terentyev.quantum.emulator.api.Helper;
+import kpfu.terentyev.quantum.simulator.api.Helper;
 
 /**
 * Класс, реализующий работу вывода транзистора.

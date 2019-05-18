@@ -1,4 +1,4 @@
-package kpfu.terentyev.quantum.emulator.core.gates;
+package kpfu.terentyev.quantum.simulator.core.gates;
 
 import kpfu.terentyev.quantum.util.Complex;
 import kpfu.terentyev.quantum.util.Matrix;

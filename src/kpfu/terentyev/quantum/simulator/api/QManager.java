@@ -1,4 +1,4 @@
-package kpfu.terentyev.quantum.emulator.api;
+package kpfu.terentyev.quantum.simulator.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
-import kpfu.terentyev.quantum.emulator.core.*;
+import kpfu.terentyev.quantum.simulator.core.*;
 import kpfu.terentyev.quantum.util.Complex;
 import kpfu.terentyev.quantum.util.Matrix;
 import kpfu.terentyev.quantum.util.Vector;
 
-import static kpfu.terentyev.quantum.emulator.core.QAlgOneStep.NotAnIndex;
+import static kpfu.terentyev.quantum.simulator.core.QAlgOneStep.NotAnIndex;
 
 /**
  * Created by aleksandrterentev on 24.01.16.

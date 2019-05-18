@@ -1,10 +1,10 @@
-package kpfu.terentyev.quantum.emulator.core;
+package kpfu.terentyev.quantum.simulator.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kpfu.terentyev.quantum.emulator.core.gates.QuantumGate;
+import kpfu.terentyev.quantum.simulator.core.gates.QuantumGate;
 import kpfu.terentyev.quantum.util.Complex;
 import kpfu.terentyev.quantum.util.Matrix;
 

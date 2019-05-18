@@ -1,4 +1,4 @@
-package kpfu.terentyev.quantum.emulator.core;
+package kpfu.terentyev.quantum.simulator.core;
 
 /**
  * Created by alexandrterentyev on 19.05.15.

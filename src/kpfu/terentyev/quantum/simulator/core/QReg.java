@@ -1,4 +1,4 @@
-package kpfu.terentyev.quantum.emulator.core;
+package kpfu.terentyev.quantum.simulator.core;
 
 import java.util.Random;
 
