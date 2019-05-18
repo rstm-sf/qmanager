@@ -1,7 +1,7 @@
-package kpfu.terentyev.quantum.simulator.api;
+package kmqc.simulator.api;
 
-import kpfu.terentyev.quantum.simulator.util.Complex;
-import kpfu.terentyev.quantum.simulator.util.Matrix;
+import kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Matrix;
 
 public class Helper extends QManager {
 

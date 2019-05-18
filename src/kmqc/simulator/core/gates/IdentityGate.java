@@ -1,7 +1,7 @@
-package kpfu.terentyev.quantum.simulator.core.gates;
+package kmqc.simulator.core.gates;
 
-import kpfu.terentyev.quantum.simulator.util.Complex;
-import kpfu.terentyev.quantum.simulator.util.Matrix;
+import kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Matrix;
 
 /**
  * Created by alexandrterentyev on 07.04.15.

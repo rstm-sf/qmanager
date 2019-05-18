@@ -1,6 +1,6 @@
 package kmqc.manager.controller.memory;
 
-import kpfu.terentyev.quantum.simulator.api.Helper;
+import kmqc.simulator.api.Helper;
 
 /**
 * Класс, реализующий работу ячейку квантовой памяти.

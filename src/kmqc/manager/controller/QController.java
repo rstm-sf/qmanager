@@ -6,8 +6,8 @@ import kmqc.manager.controller.qpu.AddrDevice;
 import kmqc.manager.controller.qpu.Placing;
 import kmqc.manager.controller.qpu.ProcessingUnit;
 
-import kpfu.terentyev.quantum.simulator.api.Helper;
-import kpfu.terentyev.quantum.simulator.util.Complex;
+import kmqc.simulator.api.Helper;
+import kmqc.simulator.util.Complex;
 
 /**
 * Класс, реализующий работу контроллера.

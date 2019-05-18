@@ -1,6 +1,6 @@
 package kmqc.manager.instruction;
 
-import kpfu.terentyev.quantum.simulator.util.Complex;
+import kmqc.simulator.util.Complex;
 
 /**
 * Наследник класса QInstruction.

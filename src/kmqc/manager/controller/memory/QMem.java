@@ -3,8 +3,8 @@ package kmqc.manager.controller.memory;
 import java.util.ArrayList;
 import java.util.List;
 
-import kpfu.terentyev.quantum.simulator.api.Helper;
-import kpfu.terentyev.quantum.simulator.util.Complex;
+import kmqc.simulator.api.Helper;
+import kmqc.simulator.util.Complex;
 
 /**
 * Класс, реализующий работу квантовой памяти.

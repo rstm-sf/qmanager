@@ -1,11 +1,11 @@
-package kpfu.terentyev.quantum.simulator.core;
+package kmqc.simulator.core;
 
 import java.util.HashMap;
 import java.util.List;
 
-import kpfu.terentyev.quantum.simulator.core.gates.QuantumGate;
-import kpfu.terentyev.quantum.simulator.core.gates.UGate;
-import kpfu.terentyev.quantum.simulator.util.Matrix;
+import kmqc.simulator.core.gates.QuantumGate;
+import kmqc.simulator.core.gates.UGate;
+import kmqc.simulator.util.Matrix;
 
 /**
  * Created by aleksandrterentev on 02.04.16.

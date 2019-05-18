@@ -1,10 +1,10 @@
-package kpfu.terentyev.quantum.simulator.core;
+package kmqc.simulator.core;
 
 import java.util.Random;
 
-import kpfu.terentyev.quantum.simulator.util.Complex;
-import kpfu.terentyev.quantum.simulator.util.Matrix;
-import kpfu.terentyev.quantum.simulator.util.Vector;
+import kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Matrix;
+import kmqc.simulator.util.Vector;
 
 /**
  * Created by alexandrterentyev on 25.02.15.

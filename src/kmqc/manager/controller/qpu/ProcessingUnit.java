@@ -3,7 +3,7 @@ package kmqc.manager.controller.qpu;
 import java.util.ArrayList;
 import java.util.List;
 
-import kpfu.terentyev.quantum.simulator.api.Helper;
+import kmqc.simulator.api.Helper;
 
 /**
 * Класс, реализующий работу процессорного устройства.
