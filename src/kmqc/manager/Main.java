@@ -8,7 +8,7 @@ import kmqc.manager.controller.qpu.Placing;
 import kmqc.manager.controller.QController;
 import kmqc.manager.instruction.*;
 
-import kpfu.terentyev.quantum.util.Complex;
+import kpfu.terentyev.quantum.simulator.util.Complex;
 
 /**
 * Главный класс для проверки наработок.

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kpfu.terentyev.quantum.simulator.api.Helper;
-import kpfu.terentyev.quantum.util.Complex;
+import kpfu.terentyev.quantum.simulator.util.Complex;
 
 /**
 * Класс, реализующий работу квантовой памяти.

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import kpfu.terentyev.quantum.simulator.core.gates.QuantumGate;
-import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.Matrix;
+import kpfu.terentyev.quantum.simulator.util.Complex;
+import kpfu.terentyev.quantum.simulator.util.Matrix;
 
 /**
  * Created by alexandrterentyev on 09.03.15.

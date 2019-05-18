@@ -2,9 +2,9 @@ package kpfu.terentyev.quantum.simulator.core;
 
 import java.util.Random;
 
-import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.Matrix;
-import kpfu.terentyev.quantum.util.Vector;
+import kpfu.terentyev.quantum.simulator.util.Complex;
+import kpfu.terentyev.quantum.simulator.util.Matrix;
+import kpfu.terentyev.quantum.simulator.util.Vector;
 
 /**
  * Created by alexandrterentyev on 25.02.15.

@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 import kpfu.terentyev.quantum.simulator.core.*;
-import kpfu.terentyev.quantum.util.Complex;
-import kpfu.terentyev.quantum.util.Matrix;
-import kpfu.terentyev.quantum.util.Vector;
+import kpfu.terentyev.quantum.simulator.util.Complex;
+import kpfu.terentyev.quantum.simulator.util.Matrix;
+import kpfu.terentyev.quantum.simulator.util.Vector;
 
 import static kpfu.terentyev.quantum.simulator.core.QAlgOneStep.NotAnIndex;
 

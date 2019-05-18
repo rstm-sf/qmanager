@@ -1,4 +1,4 @@
-package kpfu.terentyev.quantum.util;
+package kpfu.terentyev.quantum.simulator.util;
 
 final public class Matrix {
 

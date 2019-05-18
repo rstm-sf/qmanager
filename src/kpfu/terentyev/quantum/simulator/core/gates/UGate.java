@@ -1,6 +1,6 @@
 package kpfu.terentyev.quantum.simulator.core.gates;
 
-import kpfu.terentyev.quantum.util.Matrix;
+import kpfu.terentyev.quantum.simulator.util.Matrix;
 
 /**
  * Created by alexandrterentyev on 12.04.15.
