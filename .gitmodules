@@ -1,0 +1,3 @@
+[submodule "src/main/cpp/quantum-simulator"]
+	path = src/main/cpp/quantum-simulator
+	url = https://bitbucket.org/rstm-sf/quantum-simulator.git

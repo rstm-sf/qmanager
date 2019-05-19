@@ -9,9 +9,28 @@
 
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.version>4.12</junit.version>
+		<javacpp.version>1.5</javacpp.version>
 		<jdk.version>11</jdk.version>
-    <compiler.plugin.version>3.8.1</compiler.plugin.version>
+		<compiler.plugin.version>3.8.1</compiler.plugin.version>
 	</properties>
+
+  <dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>javacpp</artifactId>
+			<version>${javacpp.version}</version>
+		</dependency>
+
+	</dependencies>
 
   <build>
 		<plugins>
@@ -24,6 +43,49 @@
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
 				</configuration>
+			</plugin>
+
+      <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M3</version>
+				<configuration>
+					<skipTests>false</skipTests>
+					<forkMode>once</forkMode>
+					<environmentVariables>
+						<LD_LIBRARY_PATH>${basedir}/src/main/cpp/quantum-simulator/build/qsimulator</LD_LIBRARY_PATH>
+					</environmentVariables>
+					<systemProperties>
+						<property>
+							<name>java.library.tmpdir</name>
+							<value>${basedir}/src/main/cpp/quantum-simulator/build/qsimulator</value>
+						</property>
+					</systemProperties>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<!-- this is how the shared library libfoo.so is built -->
+				<executions>
+
+					<!-- in here we build the Java-based wrapper shared library -->
+					<execution>
+						<id>build-jnilib</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<commandlineArgs>
+								-jar ${project.build.directory}/lib/javacpp-${javacpp.version}.jar -Xcompiler -L${basedir}/src/main/cpp/quantum-simulator/build/qsimulator -Xcompiler -I${basedir}/src/main/cpp/quantum-simulator/qsimulator/include -Xcompiler -I${basedir}/src/main/cpp/quantum-simulator/qsimulator/quantum-engine/qengine/include -Xcompiler -I${basedir}/src/main/cpp/quantum-simulator/qsimulator/quantum-engine/qengine/utils -Xcompiler -I${basedir}/src/main/cpp/quantum-simulator/build/qsimulator/quantum-engine/third_party/gsl/gsl-src/include/ -classpath target/classes kmqc.qsimulator.QsimulatorLib
+							</commandlineArgs>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
       <plugin>
@@ -71,23 +133,6 @@
 				</configuration>
 			</plugin>
 
-      <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version>
-        <configuration>
-          <mainClass>kmqc.manager.Main</mainClass>
-        </configuration>
-				<executions>
-					<execution>
-						<id>build-lib</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>java</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
     </plugins>
   </build>
 </project>
