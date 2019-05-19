@@ -161,7 +161,7 @@ public class QController implements AutoCloseable {
         qpu.opPHASE(idxTransistor, theta);
     }
 
-    public void opX(long idx_qreg, long i, double x, double y, bool isConj) {
+    public void opX(long idx_qreg, long i, double x, double y, boolean isConj) {
         if (!isConj) {
             qSim.applyX(idx_qreg, i, x, y);
         } else {
@@ -169,7 +169,7 @@ public class QController implements AutoCloseable {
         }
     }
 
-    public void opZ(long idx_qreg, long i, double tau, bool isConj) {
+    public void opZ(long idx_qreg, long i, double tau, boolean isConj) {
         if (!isConj) {
             qSim.applyZ(idx_qreg, i, tau);
         } else {
@@ -210,5 +210,5 @@ public class QController implements AutoCloseable {
     /** Классическая память */
     private CMem cmem;
 
-    private bool isQdit = false;
+    private boolean isQdit = false;
 }
