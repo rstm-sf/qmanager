@@ -26,7 +26,7 @@ public class ApplyZConjugate extends QInstruction {
     * @see QInstruction#execute()
     */
     public void execute() {
-        qSim.applyZconjugate(idx_qreg, i, tau);
+        qController.opZ(idx_qreg, i, tau, true);
     }
 
     private long idx_qreg;

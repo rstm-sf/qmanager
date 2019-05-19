@@ -28,7 +28,7 @@ public class ApplyX extends QInstruction {
     * @see QInstruction#execute()
     */
     public void execute() {
-        qSim.applyX(idx_qreg, i, x, y);
+        qController.opX(idx_qreg, i, x, y, false);
     }
 
     private long idx_qreg;

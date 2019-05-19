@@ -28,7 +28,7 @@ public class ApplyXConjugate extends QInstruction {
     * @see QInstruction#execute()
     */
     public void execute() {
-        qSim.applyXconjugate(idx_qreg, i, x, y);
+        qController.opX(idx_qreg, i, x, y, true);
     }
 
     private long idx_qreg;

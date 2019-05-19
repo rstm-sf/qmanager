@@ -26,7 +26,7 @@ public class ApplyZ extends QInstruction {
     * @see QInstruction#execute()
     */
     public void execute() {
-        qSim.applyZ(idx_qreg, i, tau);
+        qController.opZ(idx_qreg, i, tau, false);
     }
 
     private long idx_qreg;
