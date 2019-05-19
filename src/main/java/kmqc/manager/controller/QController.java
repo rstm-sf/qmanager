@@ -1,13 +1,13 @@
-package main.java.kmqc.manager.controller;
+package kmqc.manager.controller;
 
-import main.java.kmqc.manager.controller.memory.CMem;
-import main.java.kmqc.manager.controller.memory.QMem;
-import main.java.kmqc.manager.controller.qpu.AddrDevice;
-import main.java.kmqc.manager.controller.qpu.Placing;
-import main.java.kmqc.manager.controller.qpu.ProcessingUnit;
+import kmqc.manager.controller.memory.CMem;
+import kmqc.manager.controller.memory.QMem;
+import kmqc.manager.controller.qpu.AddrDevice;
+import kmqc.manager.controller.qpu.Placing;
+import kmqc.manager.controller.qpu.ProcessingUnit;
 
-import main.java.kmqc.simulator.api.Helper;
-import main.java.kmqc.simulator.util.Complex;
+import kmqc.simulator.api.Helper;
+import kmqc.simulator.util.Complex;
 
 /**
 * Класс, реализующий работу контроллера.

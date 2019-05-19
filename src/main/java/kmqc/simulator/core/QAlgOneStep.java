@@ -1,11 +1,11 @@
-package main.java.kmqc.simulator.core;
+package kmqc.simulator.core;
 
 import java.util.HashMap;
 import java.util.List;
 
-import main.java.kmqc.simulator.core.gates.QuantumGate;
-import main.java.kmqc.simulator.core.gates.UGate;
-import main.java.kmqc.simulator.util.Matrix;
+import kmqc.simulator.core.gates.QuantumGate;
+import kmqc.simulator.core.gates.UGate;
+import kmqc.simulator.util.Matrix;
 
 /**
  * Created by aleksandrterentev on 02.04.16.

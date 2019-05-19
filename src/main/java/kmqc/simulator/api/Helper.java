@@ -1,7 +1,7 @@
-package main.java.kmqc.simulator.api;
+package kmqc.simulator.api;
 
-import main.java.kmqc.simulator.util.Complex;
-import main.java.kmqc.simulator.util.Matrix;
+import kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Matrix;
 
 public class Helper extends QManager {
 

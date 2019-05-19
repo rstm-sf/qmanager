@@ -1,6 +1,6 @@
-package main.java.kmqc.manager.instruction;
+package kmqc.manager.instruction;
 
-import main.java.kmqc.manager.controller.qpu.AddrDevice;
+import kmqc.manager.controller.qpu.AddrDevice;
 
 /**
 * Наследник класса QInstruction.

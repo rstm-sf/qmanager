@@ -1,4 +1,4 @@
-package main.java.kmqc.manager.controller.qpu;
+package kmqc.manager.controller.qpu;
 
 /**
 * Структура, содержащая расположение в процессорном устройстве вывода транзистора.

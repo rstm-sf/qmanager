@@ -1,10 +1,10 @@
-package main.java.kmqc.simulator.core;
+package kmqc.simulator.core;
 
 import java.util.Random;
 
-import main.java.kmqc.simulator.util.Complex;
-import main.java.kmqc.simulator.util.Matrix;
-import main.java.kmqc.simulator.util.Vector;
+import kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Matrix;
+import kmqc.simulator.util.Vector;
 
 /**
  * Created by alexandrterentyev on 25.02.15.

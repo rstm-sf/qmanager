@@ -1,4 +1,4 @@
-package main.java.kmqc.simulator.util;
+package kmqc.simulator.util;
 
 final public class Matrix {
 

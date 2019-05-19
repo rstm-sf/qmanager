@@ -1,6 +1,6 @@
-package main.java.kmqc.manager.instruction;
+package kmqc.manager.instruction;
 
-import main.java.kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Complex;
 
 /**
 * Наследник класса QInstruction.

@@ -1,4 +1,4 @@
-package main.java.kmqc.simulator.api;
+package kmqc.simulator.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,12 +6,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
-import main.java.kmqc.simulator.core.*;
-import main.java.kmqc.simulator.util.Complex;
-import main.java.kmqc.simulator.util.Matrix;
-import main.java.kmqc.simulator.util.Vector;
+import kmqc.simulator.core.*;
+import kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Matrix;
+import kmqc.simulator.util.Vector;
 
-import static main.java.kmqc.simulator.core.QAlgOneStep.NotAnIndex;
+import static kmqc.simulator.core.QAlgOneStep.NotAnIndex;
 
 /**
  * Created by aleksandrterentev on 24.01.16.

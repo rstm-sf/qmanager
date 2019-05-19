@@ -1,4 +1,4 @@
-package main.java.kmqc.manager.instruction;
+package kmqc.manager.instruction;
 
 /**
 * Наследник класса QInstruction.

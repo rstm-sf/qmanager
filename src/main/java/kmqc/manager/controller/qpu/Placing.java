@@ -1,4 +1,4 @@
-package main.java.kmqc.manager.controller.qpu;
+package kmqc.manager.controller.qpu;
 
 /**
 * Перечисление, задающие положение вывода в транзисторе.

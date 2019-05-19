@@ -65,7 +65,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>main.java.kmqc.manager.Main</mainClass>
+							<mainClass>kmqc.manager.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -76,7 +76,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.6.0</version>
         <configuration>
-          <mainClass>main.java.kmqc.manager.Main</mainClass>
+          <mainClass>kmqc.manager.Main</mainClass>
         </configuration>
 				<executions>
 					<execution>

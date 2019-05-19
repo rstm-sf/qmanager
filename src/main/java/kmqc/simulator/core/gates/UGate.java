@@ -1,6 +1,6 @@
-package main.java.kmqc.simulator.core.gates;
+package kmqc.simulator.core.gates;
 
-import main.java.kmqc.simulator.util.Matrix;
+import kmqc.simulator.util.Matrix;
 
 /**
  * Created by alexandrterentyev on 12.04.15.

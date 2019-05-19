@@ -1,4 +1,4 @@
-package main.java.kmqc.simulator.util;
+package kmqc.simulator.util;
 
 public class Complex {
     public double x;

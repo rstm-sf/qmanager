@@ -1,14 +1,14 @@
-package main.java.kmqc.manager;
+package kmqc.manager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.kmqc.manager.controller.qpu.AddrDevice;
-import main.java.kmqc.manager.controller.qpu.Placing;
-import main.java.kmqc.manager.controller.QController;
-import main.java.kmqc.manager.instruction.*;
+import kmqc.manager.controller.qpu.AddrDevice;
+import kmqc.manager.controller.qpu.Placing;
+import kmqc.manager.controller.QController;
+import kmqc.manager.instruction.*;
 
-import main.java.kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Complex;
 
 /**
 * Главный класс для проверки наработок.
@@ -69,7 +69,7 @@ public class Main {
     * @param q0            Первый логический кубит.
     * @param q0            Второй логический кубит.
     * @return Список инструкций.
-    */ 
+    */
     private static List<QInstruction> universalFun(
         int option, int idxTransistor, LogicalQubit q0, LogicalQubit q1) {
         List<QInstruction> instr = new ArrayList<>();
@@ -85,7 +85,7 @@ public class Main {
             instr.addAll(gateCNOT(idxTransistor, q0, q1));
             break;
         default:
-            break;    
+            break;
         }
         return instr;
     }
@@ -216,7 +216,7 @@ public class Main {
     * Структура для хранения физических адресов кубитов из логического.
     */
     private static class LogicalQubit {
-        
+
         /** Индекс первого кубита */
         public int idxFirst;
 
@@ -226,8 +226,8 @@ public class Main {
         /**
         * Создание логического кубита.
         *
-        * @param idxFirst  Адресс первого физического кубита. 
-        * @param idxSecond Адресс второго физического кубита. 
+        * @param idxFirst  Адресс первого физического кубита.
+        * @param idxSecond Адресс второго физического кубита.
         */
         public LogicalQubit(int idxFirst, int idxSecond) {
             this.idxFirst = idxFirst;
@@ -249,7 +249,7 @@ public class Main {
     }
 
     /**
-    * Метод, возвращающий список измерения состояния логического кубита в 
+    * Метод, возвращающий список измерения состояния логического кубита в
     * в классический бит.
     *
     * @param q       Логический кубит.
@@ -266,7 +266,7 @@ public class Main {
     /**
     * Метод, возвращающий список инициализации логического кубита
     * в состоянии &#124;0_L&gt; = {
-    *                               (1 * &#124;0&gt; + 0 * &#124;1&gt;), 
+    *                               (1 * &#124;0&gt; + 0 * &#124;1&gt;),
     *                               (0 * &#124;0&gt; + 1 * &#124;1&gt;)
     *                             }
     *

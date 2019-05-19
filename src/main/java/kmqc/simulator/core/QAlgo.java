@@ -1,12 +1,12 @@
-package main.java.kmqc.simulator.core;
+package kmqc.simulator.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import main.java.kmqc.simulator.core.gates.QuantumGate;
-import main.java.kmqc.simulator.util.Complex;
-import main.java.kmqc.simulator.util.Matrix;
+import kmqc.simulator.core.gates.QuantumGate;
+import kmqc.simulator.util.Complex;
+import kmqc.simulator.util.Matrix;
 
 /**
  * Created by alexandrterentyev on 09.03.15.

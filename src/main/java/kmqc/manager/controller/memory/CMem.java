@@ -1,4 +1,4 @@
-package main.java.kmqc.manager.controller.memory;
+package kmqc.manager.controller.memory;
 
 import java.util.ArrayList;
 import java.util.List;

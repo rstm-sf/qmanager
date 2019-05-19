@@ -1,6 +1,6 @@
-package main.java.kmqc.manager.controller.memory;
+package kmqc.manager.controller.memory;
 
-import main.java.kmqc.simulator.api.Helper;
+import kmqc.simulator.api.Helper;
 
 /**
 * Класс, реализующий работу ячейку квантовой памяти.

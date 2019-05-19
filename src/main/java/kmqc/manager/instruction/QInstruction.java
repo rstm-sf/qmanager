@@ -1,6 +1,6 @@
-package main.java.kmqc.manager.instruction;
+package kmqc.manager.instruction;
 
-import main.java.kmqc.manager.controller.QController;
+import kmqc.manager.controller.QController;
 
 /**
 * Абстрактный класс для создания инструкций, выполняемых с помощью контроллера,

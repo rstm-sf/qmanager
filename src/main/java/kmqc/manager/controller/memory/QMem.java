@@ -1,10 +1,10 @@
-package main.java.kmqc.manager.controller.memory;
+package kmqc.manager.controller.memory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.kmqc.simulator.api.Helper;
-import main.java.kmqc.simulator.util.Complex;
+import kmqc.simulator.api.Helper;
+import kmqc.simulator.util.Complex;
 
 /**
 * Класс, реализующий работу квантовой памяти.
