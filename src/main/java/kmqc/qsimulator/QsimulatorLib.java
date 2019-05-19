@@ -65,8 +65,6 @@ public class QsimulatorLib {
 
     public native void applyZconjugate(
       @Cast("uint64_t") long idx_qreg, @Cast("uint64_t") long i, double tau);
-
-    public native @Cast("uint32_t") int get_creg(@Cast("uint64_t") long idx_creg);
   }
 
 

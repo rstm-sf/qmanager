@@ -83,7 +83,7 @@ public class QController implements AutoCloseable {
             cmem.setState(idxCMem, qmem.measureState(idxQMem));
         } else {
             qSim.measure(idxQMem, idxCMem);
-            cmem.setState(idxCMem, qSim.get_creg[idxCMem]);
+            cmem.setState(idxCMem, qSim.get_creg(idxCMem));
         }
     }
 
