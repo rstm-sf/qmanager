@@ -1,5 +1,6 @@
 package kmqc.manager;
 
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +20,7 @@ import kmqc.simulator.util.Complex;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        testDeutsch(1);
-        System.out.print("\n");
-        testCNOT();
+        testCrypt();
     }
 
     /**
@@ -389,5 +388,97 @@ public class Main {
         List<QInstruction> instr = new ArrayList<>();
         instr.addAll(opU2(idxTransistor, 0.0, Math.PI, q));
         return instr;
+    }
+
+    /**
+    * @param idxQMem Индекс ячейки квантовой памяти.
+    * @return Список инструкций.
+    */
+    private static List<QInstruction> applyF0(int idxQMem, int dim) {
+        List<QInstruction> instr = new ArrayList<>();
+        for (int i = 1; i < dim; ++i) {
+            double b = Math.sqrt((double)(dim - i) / (double)dim);
+            instr.add(new ApplyX(idxQMem, i, Math.sqrt(1.0 / (double)dim), b));
+        }
+        return instr;
+    }
+
+    /**
+    * @param idxQMem Индекс ячейки квантовой памяти.
+    * @return Список инструкций.
+    */
+    private static List<QInstruction> applyF0conjugate(int idxQMem, int dim) {
+        List<QInstruction> instr = new ArrayList<>();
+        for (int i = dim - 1; i > 0; --i) {
+            double b = Math.sqrt((double)(dim - i) / (double)dim);
+            instr.add(new ApplyXConjugate(
+                idxQMem, i, Math.sqrt(1.0 / (double)dim), b));
+        }
+        return instr;
+    }
+
+    /**
+    * @param idxQMem Индекс ячейки квантовой памяти.
+    * @return Список инструкций.
+    */
+    private static List<QInstruction> applyZ(
+            int idxQMem, int dim, int word, int[] k, int n) {
+        List<QInstruction> instr = new ArrayList<>();
+        for (int i = 0; i < dim; ++i) {
+            double tau = ((double)word * (double)k[i]) / (double)n;
+            instr.add(new ApplyZ(idxQMem, i, tau));
+        }
+        return instr;
+    }
+
+    /**
+    * @param idxQMem Индекс ячейки квантовой памяти.
+    * @return Список инструкций.
+    */
+    private static List<QInstruction> applyZconjugate(
+            int idxQMem, int dim, int word, int[] k, int n) {
+        List<QInstruction> instr = new ArrayList<>();
+        for (int i = dim - 1; i >= 0; --i) {
+            double tau = ((double)word * (double)k[i]) / (double)n;
+            instr.add(new ApplyZConjugate(idxQMem, i, tau));
+        }
+        return instr;
+    }
+
+    private static void testCrypt() {
+        int n      = 8;
+        int q      = 256;
+        double eps = 0.2;
+        int nreg   = 1;
+        int dim    = 200;
+        int word_a = 15;
+        int word_b = 15;
+
+        int[] k = new int[dim];
+        for (int i = 0; i < dim; i++)
+            k[i] = i;
+
+        List<QInstruction> instructions = new ArrayList<>();
+        instructions.add(new InitQditStates(nreg, dim));
+
+        int idxQMem = 0;
+        int idxCMem = 0;
+        instructions.addAll(applyF0(idxQMem, dim));
+        instructions.addAll(applyZ(idxQMem, dim, word_a, k, n));
+
+        instructions.addAll(applyZconjugate(idxQMem, dim, word_b, k, n));
+        instructions.addAll(applyF0conjugate(idxQMem, dim));
+
+        instructions.add(new Measure(idxQMem, idxCMem));
+
+        for (QInstruction instruction : instructions)
+            instruction.execute();
+
+        int result = QInstruction.getIdxCMem(idxCMem);
+        if (result == 0) {
+            System.out.print("TEST PASSED\n");
+        } else {
+            System.out.print("TEST FAIL\n");
+        }
     }
 }
