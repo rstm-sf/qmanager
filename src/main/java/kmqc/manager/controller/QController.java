@@ -35,8 +35,8 @@ public class QController implements AutoCloseable {
     }
 
     public QController(long nreg, long dim) {
-        this.qSim = new QsimulatorLib.Simulator(nreg, ndim);
-        this.cmem = new CMem(nreg);
+        this.qSim = new QsimulatorLib.Simulator(nreg, dim);
+        this.cmem = new CMem((int)nreg);
         this.isQdit = true;
     }
 
@@ -190,7 +190,7 @@ public class QController implements AutoCloseable {
     @Override
     public void close() {
         try {
-            qsim.close();
+            qSim.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -65,6 +65,8 @@ public class QsimulatorLib {
 
     public native void applyZconjugate(
       @Cast("uint64_t") long idx_qreg, @Cast("uint64_t") long i, double tau);
+
+    public native @Cast("uint32_t") int get_creg(@Cast("uint64_t") long idx_creg);
   }
 
 
@@ -98,7 +100,7 @@ public class QsimulatorLib {
       e.printStackTrace();
     }
   }
-  
+
   private static void test3() {
     Simulator qsim = new Simulator(1, 2);
     double half = 1.0 / 2.0;

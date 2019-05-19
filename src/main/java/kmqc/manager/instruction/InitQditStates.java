@@ -1,6 +1,6 @@
 package kmqc.manager.instruction;
 
-import kmqc.qsimulator.QsimulatorLib;
+import kmqc.manager.controller.QController;
 
 /**
 * Наследник класса QInstruction.
