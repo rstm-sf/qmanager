@@ -1,6 +1,7 @@
 package kmqc.manager.instruction;
 
 import kmqc.manager.controller.QController;
+import kmqc.qsimulator.QsimulatorLib;
 
 /**
 * Абстрактный класс для создания инструкций, выполняемых с помощью контроллера,
@@ -18,6 +19,8 @@ public abstract class QInstruction {
     public abstract void execute();
 
     protected static QController qController = new QController();
+    
+    protected static QsimulatorLib.Simulator qSim = new QsimulatorLib.Simulator(1, 2);
 
     /**
     * Получение значение бита в указанной ячейке классической памяти.
